@@ -1,13 +1,12 @@
 name: MyPet
 main: de.Keyle.MyPet.MyPetPlugin
-version: ${parsedVersion.majorVersion}.${parsedVersion.minorVersion}
+version: 3.12
 api-version: '1.13'
 author: Keyle
-website: ${project.url}
+website: https://www.spigotmc.org/resources/mypet.12725/
 softdepend:
   - GriefPrevention
   - GriefPreventionPlus
-  - Citizens
   - Multiverse-Core
   - My_Worlds
   - MythicMobs
@@ -16,6 +15,8 @@ softdepend:
   - Vault
   - WGCustomFlags
   - WorldGuard
+loadbefore:
+  - Citizens
 commands:
   myPet:
     description: Help for all pet commands.
