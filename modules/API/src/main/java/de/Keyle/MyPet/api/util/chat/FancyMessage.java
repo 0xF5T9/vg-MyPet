@@ -116,7 +116,6 @@ public class FancyMessage {
         return this;
     }
 
-    @SuppressWarnings("unchecked")
     public String toJSONString() {
         JsonArray parts = new JsonArray();
 
@@ -127,7 +126,6 @@ public class FancyMessage {
         return gson.toJson(parts);
     }
 
-    @SuppressWarnings("unchecked")
     public JsonArray toJSON() {
         JsonArray parts = new JsonArray();
 

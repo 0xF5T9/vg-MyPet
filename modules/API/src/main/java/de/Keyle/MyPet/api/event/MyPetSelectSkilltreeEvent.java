@@ -34,7 +34,7 @@ public class MyPetSelectSkilltreeEvent extends Event {
     protected final StoredMyPet myPet;
     protected final Skilltree skilltree;
     private final Source source;
-    
+
     public enum Source {
         Auto, PlayerCommand, AdminCommand, AdminCreation, BossShopPro, Shop, Other
     }
@@ -44,7 +44,7 @@ public class MyPetSelectSkilltreeEvent extends Event {
         this.skilltree = skilltree;
         this.source = source;
     }
-    
+
     public Source getSource() {
         return source;
     }
@@ -69,7 +69,6 @@ public class MyPetSelectSkilltreeEvent extends Event {
         return handlers;
     }
 
-    @SuppressWarnings("unused")
     public static HandlerList getHandlerList() {
         return handlers;
     }

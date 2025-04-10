@@ -64,9 +64,9 @@ public class DonateCheck {
 
             String line;
             while ((line = donation.readLine()) != null) {
-                donMap.put(line.substring(0,line.length()-1), line.charAt(line.length() - 1));
+                donMap.put(line.substring(0, line.length() - 1), line.charAt(line.length() - 1));
             }
-        } catch(Exception ignored) {
+        } catch (Exception ignored) {
         }
     }
 
@@ -74,27 +74,27 @@ public class DonateCheck {
         try {
             // Check whether this player has donated or is a helper for the MyPet project
             // returns
-            //   0 for nothing
-            //   1 for donator
-            //   2 for developer
-            //   3 for translator
-            //   4 for helper
-            //   5 for creator
-            //   6 for premium
+            // 0 for nothing
+            // 1 for donator
+            // 2 for developer
+            // 3 for translator
+            // 4 for helper
+            // 5 for creator
+            // 6 for premium
             // no data will be saved on the server
             String check;
             if (player.getMojangUUID() != null) {
-                check = player.getName()+","+player.getMojangUUID()+",";
+                check = player.getName() + "," + player.getMojangUUID() + ",";
             } else {
-                check = player.getName()+",,";
+                check = player.getName() + ",,";
             }
 
-            if(donMap.isEmpty()) {
+            if (donMap.isEmpty()) {
                 fillDonMap();
             }
 
             Character donCheck = '0';
-            if(donMap.containsKey(check)) {
+            if (donMap.containsKey(check)) {
                 donCheck = donMap.get(check);
             }
             switch (donCheck) {
@@ -113,7 +113,7 @@ public class DonateCheck {
             }
         } catch (Exception ignored) {
         } finally {
-            return DonationRank.None;
         }
+        return DonationRank.None;
     }
 }

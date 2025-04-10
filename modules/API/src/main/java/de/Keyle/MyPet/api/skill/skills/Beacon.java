@@ -30,6 +30,8 @@ import de.Keyle.MyPet.api.util.Scheduler;
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("all")
+
 @SkillName(value = "Beacon", translationNode = "Name.Skill.Beacon")
 public interface Beacon extends Skill, Scheduler, NBTStorage, ActiveSkill {
 

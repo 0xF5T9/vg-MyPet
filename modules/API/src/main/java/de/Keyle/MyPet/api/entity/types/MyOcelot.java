@@ -25,7 +25,9 @@ import de.Keyle.MyPet.api.entity.MyPet;
 import de.Keyle.MyPet.api.entity.MyPetBaby;
 import org.bukkit.entity.Ocelot.Type;
 
-@DefaultInfo(food = {"cod", "salmon"})
+@SuppressWarnings("all")
+
+@DefaultInfo(food = { "cod", "salmon" })
 public interface MyOcelot extends MyPet, MyPetBaby {
     Type getCatType();
 

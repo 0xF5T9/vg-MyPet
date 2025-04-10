@@ -22,6 +22,8 @@ package de.Keyle.MyPet.api.util.intervaltree;
 
 import java.util.*;
 
+@SuppressWarnings("all")
+
 /**
  * A representation of a single node in the {@link IntervalTree}.
  * <p>
@@ -31,7 +33,8 @@ import java.util.*;
  * can't be changed during the lifespan of this node. It can however move up or
  * down in the tree as a result of balancing rotations, similarly to a normal
  * balanced search tree. Unlike a traditional binary search tree, every node in
- * the interval tree can store multiple intervals. The invariant is, that each node
+ * the interval tree can store multiple intervals. The invariant is, that each
+ * node
  * stores only intervals that contain its middlepoint.
  * </p>
  * <p>
@@ -45,7 +48,8 @@ import java.util.*;
  * Given an interval that needs to be found, inserted or removed from the tree,
  * an augmented binary search algorithm is performed in the following fashion.
  * For each visited node, check if the middlepoint of this node is contained in
- * the query interval. If so, then this node is the position where the query interval
+ * the query interval. If so, then this node is the position where the query
+ * interval
  * must be stored. Otherwise, visit the left child, if the interval is entirely
  * to the left of the middlepoint, or visit the right child otherwise.
  * </p>
@@ -56,14 +60,18 @@ import java.util.*;
  * optimal time complexity of the {@link IntervalTree#add(Interval) add},
  * {@link IntervalTree#remove(Object) remove} and
  * {@link IntervalTree#contains(Object) contains} operations, we define the base
- * position of an interval (or base) as the node closest to root within the set of
+ * position of an interval (or base) as the node closest to root within the set
+ * of
  * nodes, where the interval may be stored. To be able to guarantee the
  * correctness of the algorithm, this invariant must be preserved after each
  * tree operation. This is especially important, when tree rotations are
  * performed. Whenever a node is promoted closer to the root as a result of a
- * rotation, the promoted node must assimilate all intervals from the node demoted
- * by the rotation. This ensures that whenever the binary search algorithm encounters
- * a node, which is a valid location for a given interval, this node will be the base
+ * rotation, the promoted node must assimilate all intervals from the node
+ * demoted
+ * by the rotation. This ensures that whenever the binary search algorithm
+ * encounters
+ * a node, which is a valid location for a given interval, this node will be the
+ * base
  * of the interval.
  * </p>
  * <p>
@@ -76,14 +84,17 @@ import java.util.*;
  * node contains all intervals. Intervals have to be stored in an ordered
  * way. Each node keeps its intervals in two {@link TreeSet}s at the same
  * time - one containing the intervals by their start points in ascending order
- * and the other by the end points in descending order. Whenever we have to provide
- * a set of all intervals contained within this node, that intersect a query point,
+ * and the other by the end points in descending order. Whenever we have to
+ * provide
+ * a set of all intervals contained within this node, that intersect a query
+ * point,
  * we check if the query is left or right of the middlepoint of the node.
  * If it is left, we iterate through the TreeSet ordered by the start points
  * until we reach an interval completely to the right of the query. Analogously,
  * if the query is to the right of the middlepoint, we iterate through the set
  * ordered by the end points until we reach an interval that's completely to
- * the left of the query. This allows us to only iterate through these intervals,
+ * the left of the query. This allows us to only iterate through these
+ * intervals,
  * that we will actually return as a result of the query.
  * </p>
  *
@@ -108,22 +119,30 @@ public class TreeNode<T extends Comparable<? super T>, S> implements Iterable<In
     protected NavigableSet<Interval<T, S>> decreasing;
 
     /**
-     * A pointer to the left child of the current node. The left child must either be
-     * {@code null} or have a midpoint, smaller than the midpoint of the current node. More
-     * formally, {@code left.midpoint.compareTo(this.midpoint) < 0} must evaluate to {@code true}.
+     * A pointer to the left child of the current node. The left child must either
+     * be
+     * {@code null} or have a midpoint, smaller than the midpoint of the current
+     * node. More
+     * formally, {@code left.midpoint.compareTo(this.midpoint) < 0} must evaluate to
+     * {@code true}.
      */
     protected TreeNode<T, S> left;
 
     /**
-     * A pointer to the right child of the current node. The right child must either be
-     * {@code null} or have a midpoint, larger than the midpoint of the current node. More
-     * formally, {@code right.midpoint.compareTo(this.midpoint) > 0} must evaluate to {@code true}.
+     * A pointer to the right child of the current node. The right child must either
+     * be
+     * {@code null} or have a midpoint, larger than the midpoint of the current
+     * node. More
+     * formally, {@code right.midpoint.compareTo(this.midpoint) > 0} must evaluate
+     * to {@code true}.
      */
     protected TreeNode<T, S> right;
 
     /**
-     * The midpoint of the initial interval added to the node. It is an immutable value
-     * and can not be changed, even if the initial interval has been removed from the
+     * The midpoint of the initial interval added to the node. It is an immutable
+     * value
+     * and can not be changed, even if the initial interval has been removed from
+     * the
      * node.
      */
     protected final T midpoint;
@@ -150,18 +169,24 @@ public class TreeNode<T extends Comparable<? super T>, S> implements Iterable<In
     }
 
     /**
-     * A helper function for the {@link IntervalTree#add(Interval)} method. Adds a new
+     * A helper function for the {@link IntervalTree#add(Interval)} method. Adds a
+     * new
      * interval to the subtree rooted at a {@code TreeNode}.
      *
-     * @param tree     The {@link IntervalTree} containing the subtree. Used primarily for
-     *                 housekeeping, such as adjusting the size of the tree, if needed.
-     * @param root     The root of the subtree, to which we are adding a new interval.
+     * @param tree     The {@link IntervalTree} containing the subtree. Used
+     *                 primarily for
+     *                 housekeeping, such as adjusting the size of the tree, if
+     *                 needed.
+     * @param root     The root of the subtree, to which we are adding a new
+     *                 interval.
      * @param interval The {@link Interval} that we are adding.
      * @param <T>      The type of the start and end points of the interval.
-     * @return The new root of the subtree. It may be different than the current root,
-     * if the subtree had to be rebalanced after the operation.
+     * @return The new root of the subtree. It may be different than the current
+     *         root,
+     *         if the subtree had to be rebalanced after the operation.
      */
-    public static <T extends Comparable<? super T>, S> TreeNode<T, S> addInterval(IntervalTree<T, S> tree, TreeNode<T, S> root, Interval<T, S> interval) {
+    public static <T extends Comparable<? super T>, S> TreeNode<T, S> addInterval(IntervalTree<T, S> tree,
+            TreeNode<T, S> root, Interval<T, S> interval) {
         if (root == null) {
             tree.size++;
             return new TreeNode<>(interval);
@@ -186,20 +211,23 @@ public class TreeNode<T extends Comparable<? super T>, S> implements Iterable<In
     /**
      * Returns the height of the subtree, rooted at the current node.
      *
-     * @return The height of the subtree, rooted ad the current node. It will be 1, if
-     * the node is a leaf.
+     * @return The height of the subtree, rooted ad the current node. It will be 1,
+     *         if
+     *         the node is a leaf.
      */
     public int height() {
         return height;
     }
 
     /**
-     * Returns the height of a subtree, rooted at a given node. This function accepts
+     * Returns the height of a subtree, rooted at a given node. This function
+     * accepts
      * {@code null} values and returns 0 as height for them.
      *
      * @param node The node, whose height has to be determined.
-     * @return The height of the subtree rooted at {@code node}. Returns 0, if {@code node}
-     * is {@code null}.
+     * @return The height of the subtree rooted at {@code node}. Returns 0, if
+     *         {@code node}
+     *         is {@code null}.
      */
     private static int height(TreeNode node) {
         return node == null ? 0 : node.height();
@@ -210,9 +238,11 @@ public class TreeNode<T extends Comparable<? super T>, S> implements Iterable<In
      * if necessary.
      *
      * @return The new root of the subtree, after the balancing operation has been
-     * performed. It may return a {@code null} value, if the balancing has been
-     * triggered by a {@link #removeInterval(IntervalTree, TreeNode, Interval)} operation
-     * and the removed interval had been the last one in the subtree.
+     *         performed. It may return a {@code null} value, if the balancing has
+     *         been
+     *         triggered by a
+     *         {@link #removeInterval(IntervalTree, TreeNode, Interval)} operation
+     *         and the removed interval had been the last one in the subtree.
      */
     private TreeNode<T, S> balanceOut() {
         int balance = height(left) - height(right);
@@ -241,11 +271,12 @@ public class TreeNode<T extends Comparable<? super T>, S> implements Iterable<In
     /**
      * Performs a left rotation of the current node, by promoting its right child
      * and demoting the current node. After the left rotation, the promoted node
-     * {@link #assimilateOverlappingIntervals(TreeNode) assimilates} the intervals in
+     * {@link #assimilateOverlappingIntervals(TreeNode) assimilates} the intervals
+     * in
      * the demoted node, which intersect its middlepoint.
      *
      * @return The new root of the subtree rooted at the current node, after the
-     * rotation has been performed.
+     *         rotation has been performed.
      */
     private TreeNode<T, S> leftRotate() {
         TreeNode<T, S> head = right;
@@ -259,11 +290,12 @@ public class TreeNode<T extends Comparable<? super T>, S> implements Iterable<In
     /**
      * Performs a right rotation of the current node, by promoting its left child
      * and demoting the current node. After the right rotation, the promoted node
-     * {@link #assimilateOverlappingIntervals(TreeNode) assimilates} the intervals in
+     * {@link #assimilateOverlappingIntervals(TreeNode) assimilates} the intervals
+     * in
      * the demoted node, which intersect its middlepoint.
      *
      * @return The new root of the subtree rooted at the current node, after the
-     * rotation has been performed.
+     *         rotation has been performed.
      */
     private TreeNode<T, S> rightRotate() {
         TreeNode<T, S> head = left;
@@ -317,14 +349,18 @@ public class TreeNode<T extends Comparable<? super T>, S> implements Iterable<In
      * It searches recursively for all intervals stored in the subtree rooted at
      * the current node, that intersect a target point.
      *
-     * @param root  The root of the currently traversed subtree. May be {@code null}.
+     * @param root  The root of the currently traversed subtree. May be
+     *              {@code null}.
      * @param point The query point.
      * @param res   The set used to store all intervals to be returned.
-     * @param <T,S> The type of the start and end points of the intervals, as well as
+     * @param <T,S> The type of the start and end points of the intervals, as well
+     *              as
      *              the query point.
-     * @return The set of all intervals from the current subtree, containing the query.
+     * @return The set of all intervals from the current subtree, containing the
+     *         query.
      */
-    public static <T extends Comparable<? super T>, S> Set<Interval<T, S>> query(TreeNode<T, S> root, T point, Set<Interval<T, S>> res) {
+    public static <T extends Comparable<? super T>, S> Set<Interval<T, S>> query(TreeNode<T, S> root, T point,
+            Set<Interval<T, S>> res) {
         if (root == null) {
             return res;
         }
@@ -347,7 +383,6 @@ public class TreeNode<T extends Comparable<? super T>, S> implements Iterable<In
         }
     }
 
-
     /**
      * A helper function for the {@link IntervalTree#remove(Interval)} method.
      * It searches recursively for the base node of a target interval and
@@ -356,17 +391,22 @@ public class TreeNode<T extends Comparable<? super T>, S> implements Iterable<In
      * doesn't iterate through all intervals, but performs a binary search in
      * O(logn).
      *
-     * @param tree     The {@link IntervalTree} containing the subtree. Used primarily for
-     *                 housekeeping, such as adjusting the size of the tree, if needed.
-     * @param root     The root of the currently traversed subtree. May be {@code null}.
+     * @param tree     The {@link IntervalTree} containing the subtree. Used
+     *                 primarily for
+     *                 housekeeping, such as adjusting the size of the tree, if
+     *                 needed.
+     * @param root     The root of the currently traversed subtree. May be
+     *                 {@code null}.
      * @param interval The target interval to be removed.
-     * @param <T,S>    The type of the start and end points of the intervals, as well as
+     * @param <T,S>    The type of the start and end points of the intervals, as
+     *                 well as
      *                 the query point.
      * @return The new root of the subtree, rooted at the current node, after the
-     * interval has been removed. This could be {@code null} if the interval
-     * was the last one stored at the subtree.
+     *         interval has been removed. This could be {@code null} if the interval
+     *         was the last one stored at the subtree.
      */
-    public static <T extends Comparable<? super T>, S> TreeNode<T, S> removeInterval(IntervalTree<T, S> tree, TreeNode<T, S> root, Interval<T, S> interval) {
+    public static <T extends Comparable<? super T>, S> TreeNode<T, S> removeInterval(IntervalTree<T, S> tree,
+            TreeNode<T, S> root, Interval<T, S> interval) {
         if (root == null) {
             return null;
         }
@@ -388,13 +428,14 @@ public class TreeNode<T extends Comparable<? super T>, S> implements Iterable<In
     }
 
     /**
-     * Deletes a node from the tree. The caller of this method needs to check, if the
+     * Deletes a node from the tree. The caller of this method needs to check, if
+     * the
      * node is actually empty, because this method only performs the deletion.
      *
      * @param root  The node that needs to be deleted.
      * @param <T,S> The type of the start and end points of the intervals.
      * @return The new root of the subtree rooted at the node to be deleted. It may
-     * be {@code null}, if the deleted node was the last in the subtree.
+     *         be {@code null}, if the deleted node was the last in the subtree.
      */
     private static <T extends Comparable<? super T>, S> TreeNode<T, S> deleteNode(TreeNode<T, S> root) {
         if (root.left == null && root.right == null) {
@@ -433,18 +474,27 @@ public class TreeNode<T extends Comparable<? super T>, S> implements Iterable<In
     }
 
     /**
-     * A helper method for the range search used in the interval intersection query in the tree.
-     * This corresponds to the left branch of the range search, once we find a node, whose
-     * midpoint is contained in the query interval. All intervals in the left subtree of that node
-     * are guaranteed to intersect with the query, if they have an endpoint greater or equal than
-     * the start of the query interval. Basically, this means that every time we branch to the left
-     * in the binary search, we need to add the whole right subtree to the result set.
+     * A helper method for the range search used in the interval intersection query
+     * in the tree.
+     * This corresponds to the left branch of the range search, once we find a node,
+     * whose
+     * midpoint is contained in the query interval. All intervals in the left
+     * subtree of that node
+     * are guaranteed to intersect with the query, if they have an endpoint greater
+     * or equal than
+     * the start of the query interval. Basically, this means that every time we
+     * branch to the left
+     * in the binary search, we need to add the whole right subtree to the result
+     * set.
      *
-     * @param node   The left child of the node, whose midpoint is contained in the query interval.
+     * @param node   The left child of the node, whose midpoint is contained in the
+     *               query interval.
      * @param query  The query interval.
-     * @param result The set which stores all intervals in the tree, intersecting the query.
+     * @param result The set which stores all intervals in the tree, intersecting
+     *               the query.
      */
-    static <T extends Comparable<? super T>, S> void rangeQueryLeft(TreeNode<T, S> node, Interval<T, S> query, Set<Interval<T, S>> result) {
+    static <T extends Comparable<? super T>, S> void rangeQueryLeft(TreeNode<T, S> node, Interval<T, S> query,
+            Set<Interval<T, S>> result) {
         while (node != null) {
             if (query.contains(node.midpoint)) {
                 result.addAll(node.increasing);
@@ -467,18 +517,27 @@ public class TreeNode<T extends Comparable<? super T>, S> implements Iterable<In
     }
 
     /**
-     * A helper method for the range search used in the interval intersection query in the tree.
-     * This corresponds to the right branch of the range search, once we find a node, whose
-     * midpoint is contained in the query interval. All intervals in the right subtree of that node
-     * are guaranteed to intersect with the query, if they have an endpoint smaller or equal than
-     * the end of the query interval. Basically, this means that every time we branch to the right
-     * in the binary search, we need to add the whole left subtree to the result set.
+     * A helper method for the range search used in the interval intersection query
+     * in the tree.
+     * This corresponds to the right branch of the range search, once we find a
+     * node, whose
+     * midpoint is contained in the query interval. All intervals in the right
+     * subtree of that node
+     * are guaranteed to intersect with the query, if they have an endpoint smaller
+     * or equal than
+     * the end of the query interval. Basically, this means that every time we
+     * branch to the right
+     * in the binary search, we need to add the whole left subtree to the result
+     * set.
      *
-     * @param node   The right child of the node, whose midpoint is contained in the query interval.
+     * @param node   The right child of the node, whose midpoint is contained in the
+     *               query interval.
      * @param query  The query interval.
-     * @param result The set which stores all intervals in the tree, intersecting the query.
+     * @param result The set which stores all intervals in the tree, intersecting
+     *               the query.
      */
-    static <T extends Comparable<? super T>, S> void rangeQueryRight(TreeNode<T, S> node, Interval<T, S> query, Set<Interval<T, S>> result) {
+    static <T extends Comparable<? super T>, S> void rangeQueryRight(TreeNode<T, S> node, Interval<T, S> query,
+            Set<Interval<T, S>> result) {
         while (node != null) {
             if (query.contains(node.midpoint)) {
                 result.addAll(node.increasing);
@@ -500,11 +559,13 @@ public class TreeNode<T extends Comparable<? super T>, S> implements Iterable<In
         }
     }
 
-
     /**
-     * An iterator over all intervals stored in subtree rooted at the current node. Traversal
-     * is done via classic iterative in-order tree traversal where each iteration is in
-     * amortized O(1) time. The iterator requires O(logn) space - at each point of the
+     * An iterator over all intervals stored in subtree rooted at the current node.
+     * Traversal
+     * is done via classic iterative in-order tree traversal where each iteration is
+     * in
+     * amortized O(1) time. The iterator requires O(logn) space - at each point of
+     * the
      * traversal we keep a stack of the currently traversed branch of the tree.
      */
     @Override

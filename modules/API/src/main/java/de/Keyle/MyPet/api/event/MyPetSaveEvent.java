@@ -51,7 +51,6 @@ public class MyPetSaveEvent extends Event {
         return handlers;
     }
 
-    @SuppressWarnings("unused")
     public static HandlerList getHandlerList() {
         return handlers;
     }

@@ -20,6 +20,8 @@
 
 package de.Keyle.MyPet.api.skill.modifier;
 
+@SuppressWarnings("all")
+
 public class UpgradeEnumModifier<T extends Enum> implements UpgradeModifier<T> {
     T value;
 

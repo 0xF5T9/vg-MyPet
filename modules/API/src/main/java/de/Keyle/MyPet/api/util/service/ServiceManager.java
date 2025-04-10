@@ -26,9 +26,13 @@ import org.apache.commons.lang.ClassUtils;
 
 import java.util.*;
 
+@SuppressWarnings("all")
+
 /**
- * The {@link ServiceManager} manages all interactions with other plugins. Services are stored by class and by the
- * interfaces they implement so they can also be retrieved by them. You can get instances of other plugins and check if
+ * The {@link ServiceManager} manages all interactions with other plugins.
+ * Services are stored by class and by the
+ * interfaces they implement so they can also be retrieved by them. You can get
+ * instances of other plugins and check if
  * other plugins are active.
  */
 public class ServiceManager {
@@ -42,7 +46,8 @@ public class ServiceManager {
     }
 
     /**
-     * register new services here. A service needs the {@link ServiceName} annotation to be accepted.
+     * register new services here. A service needs the {@link ServiceName}
+     * annotation to be accepted.
      *
      * @param serviceClass the service class
      */
@@ -60,7 +65,6 @@ public class ServiceManager {
         }
     }
 
-    @SuppressWarnings("unchecked")
     private void registerService(ServiceContainer service) {
         boolean genericService = true;
         for (Object o : ClassUtils.getAllInterfaces(service.getClass())) {
@@ -123,7 +127,8 @@ public class ServiceManager {
     }
 
     /**
-     * returns if services that inherit from a specific class/interface are available
+     * returns if services that inherit from a specific class/interface are
+     * available
      *
      * @param serviceClass class that implements from {@link ServiceContainer}
      * @return if any service was found
@@ -164,7 +169,8 @@ public class ServiceManager {
     }
 
     /**
-     * returns if a service that inherit from a specific class/interface is available
+     * returns if a service that inherit from a specific class/interface is
+     * available
      *
      * @param serviceClass class that implements from {@link ServiceContainer}
      * @return if any service was found

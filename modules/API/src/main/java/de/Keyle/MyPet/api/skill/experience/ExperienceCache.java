@@ -39,6 +39,8 @@ import java.util.Map;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
+@SuppressWarnings("all")
+
 @ServiceName("ExperienceCache")
 @Load(Load.State.OnLoad)
 public class ExperienceCache implements ServiceContainer {
@@ -158,7 +160,8 @@ public class ExperienceCache implements ServiceContainer {
     }
 
     protected void load() {
-        try (InputStreamReader reader = new InputStreamReader(new GZIPInputStream(new FileInputStream(cacheFile)), StandardCharsets.UTF_8)) {
+        try (InputStreamReader reader = new InputStreamReader(new GZIPInputStream(new FileInputStream(cacheFile)),
+                StandardCharsets.UTF_8)) {
             Gson gson = new Gson();
             JsonObject cacheObject = gson.fromJson(reader, JsonObject.class);
             this.expMap = cacheObject.get("expMap").getAsJsonObject();

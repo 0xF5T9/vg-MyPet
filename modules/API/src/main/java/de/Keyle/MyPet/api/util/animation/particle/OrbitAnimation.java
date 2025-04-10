@@ -24,6 +24,8 @@ import de.Keyle.MyPet.api.util.animation.ParticleAnimation;
 import de.Keyle.MyPet.api.util.location.LocationHolder;
 import org.bukkit.Location;
 
+@SuppressWarnings("all")
+
 public abstract class OrbitAnimation extends ParticleAnimation {
     protected final double radius;
     protected final double stepAngle;
@@ -47,22 +49,25 @@ public abstract class OrbitAnimation extends ParticleAnimation {
     public void tick(int frame, Location location) {
         Location loc = location.clone();
 
-        //double xangle = Math.toRadians(i++); // note that here we do have to convert to radians.
-        //double xAxisCos = Math.cos(xangle); // getting the cos value for the pitch.
-        //double xAxisSin = Math.sin(xangle); // getting the sin value for the pitch.
+        // double xangle = Math.toRadians(i++); // note that here we do have to convert
+        // to radians.
+        // double xAxisCos = Math.cos(xangle); // getting the cos value for the pitch.
+        // double xAxisSin = Math.sin(xangle); // getting the sin value for the pitch.
 
-        //double yangle = Math.toRadians(i++); // note that here we do have to convert to radians.
-        //double yAxisCos = Math.cos(-yangle); // getting the cos value for the yaw.
-        //double yAxisSin = Math.sin(-yangle); // getting the sin value for the yaw.
+        // double yangle = Math.toRadians(i++); // note that here we do have to convert
+        // to radians.
+        // double yAxisCos = Math.cos(-yangle); // getting the cos value for the yaw.
+        // double yAxisSin = Math.sin(-yangle); // getting the sin value for the yaw.
 
         double zangle = Math.toRadians(rotationAngle++); // note that here we do have to convert to radians.
         double zAxisCos = Math.cos(zangle); // getting the cos value for the roll.
         double zAxisSin = Math.sin(zangle); // getting the sin value for the roll.
 
-        Location rotLoc = new Location(loc.getWorld(), radius * Math.cos(frame * stepAngle), 0, radius * Math.sin(frame * stepAngle));
+        Location rotLoc = new Location(loc.getWorld(), radius * Math.cos(frame * stepAngle), 0,
+                radius * Math.sin(frame * stepAngle));
 
-        //rotateAroundAxisX(rotLoc, xAxisCos, xAxisSin);
-        //rotateAroundAxisY(rotLoc, yAxisCos, yAxisSin);
+        // rotateAroundAxisX(rotLoc, xAxisCos, xAxisSin);
+        // rotateAroundAxisY(rotLoc, yAxisCos, yAxisSin);
         rotateAroundAxisZ(rotLoc, zAxisCos, zAxisSin);
 
         loc.add(rotLoc);

@@ -27,20 +27,31 @@ import lombok.experimental.Accessors;
 import org.bukkit.ChatColor;
 
 public class MessagePart {
-    @Getter @Setter @Accessors(chain = true)
+    @Getter
+    @Setter
+    @Accessors(chain = true)
     ChatColor color = null;
-    @Getter @Setter @Accessors(chain = true)
+    @Getter
+    @Setter
+    @Accessors(chain = true)
     ChatColor[] styles = null;
-    @Getter @Setter @Accessors(chain = true)
+    @Getter
+    @Setter
+    @Accessors(chain = true)
     String clickActionName = null;
-    @Getter @Setter @Accessors(chain = true)
+    @Getter
+    @Setter
+    @Accessors(chain = true)
     String clickActionData = null;
-    @Getter @Setter @Accessors(chain = true)
+    @Getter
+    @Setter
+    @Accessors(chain = true)
     String hoverActionName = null;
-    @Getter @Setter @Accessors(chain = true)
+    @Getter
+    @Setter
+    @Accessors(chain = true)
     String hoverActionData = null;
 
-    @SuppressWarnings("unchecked")
     public JsonObject toJson() {
         JsonObject json = new JsonObject();
         if (color != null) {

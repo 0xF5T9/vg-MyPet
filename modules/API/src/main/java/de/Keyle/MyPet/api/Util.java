@@ -45,6 +45,8 @@ import java.util.regex.Matcher;
 import static org.bukkit.ChatColor.GOLD;
 import static org.bukkit.ChatColor.RESET;
 
+@SuppressWarnings("all")
+
 public class Util {
 
     static Random rng = new Random();
@@ -184,7 +186,7 @@ public class Util {
     }
 
     public static String decimal2roman(int src) {
-        char digits[] = {'I', 'V', 'X', 'L', 'C', 'D', 'M'};
+        char digits[] = { 'I', 'V', 'X', 'L', 'C', 'D', 'M' };
         String thousands = "", result = "";
         int rang, digit, i;
 
@@ -255,9 +257,11 @@ public class Util {
      *
      * @param str1 a string of ordinal numbers separated by decimal points.
      * @param str2 a string of ordinal numbers separated by decimal points.
-     * @return The result is a negative integer if str1 is _numerically_ less than str2.
-     * The result is a positive integer if str1 is _numerically_ greater than str2.
-     * The result is zero if the strings are _numerically_ equal.
+     * @return The result is a negative integer if str1 is _numerically_ less than
+     *         str2.
+     *         The result is a positive integer if str1 is _numerically_ greater
+     *         than str2.
+     *         The result is zero if the strings are _numerically_ equal.
      */
     public static int versionCompare(String str1, String str2) {
         String[] vals1 = str1.split("\\.");
@@ -316,23 +320,27 @@ public class Util {
         return findClassInStackTrace(stackTrace, className, element, element, false);
     }
 
-    public static boolean findClassInStackTrace(StackTraceElement[] stackTrace, String className, int from, int to, boolean debug) {
+    public static boolean findClassInStackTrace(StackTraceElement[] stackTrace, String className, int from, int to,
+            boolean debug) {
         Validate.isTrue(to >= from, "\"to\" has to be >= \"from\".");
         Validate.isTrue(from >= 0, "\"from\" has to be >= 0.");
         to = Math.min(stackTrace.length - 1, to);
         if (debug) {
-            MyPetApi.getLogger().info("=====================================================================================================================================");
+            MyPetApi.getLogger().info(
+                    "=====================================================================================================================================");
         }
         for (int i = from; i <= to; i++) {
             if (stackTrace[i].getClassName().equals(className)) {
                 if (debug) {
-                    MyPetApi.getLogger().info("=====================================================================================================================================");
+                    MyPetApi.getLogger().info(
+                            "=====================================================================================================================================");
                 }
                 return true;
             }
         }
         if (debug) {
-            MyPetApi.getLogger().info("=====================================================================================================================================");
+            MyPetApi.getLogger().info(
+                    "=====================================================================================================================================");
         }
         return false;
     }
@@ -351,22 +359,28 @@ public class Util {
         lore.add(RESET + Translation.getString("Name.Hunger", lang) + ": " + GOLD + Math.round(mypet.getSaturation()));
         if (!Configuration.Respawn.DISABLE_AUTO_RESPAWN) {
             if (mypet.getRespawnTime() > 0) {
-                lore.add(RESET + Translation.getString("Name.Respawntime", lang) + ": " + GOLD + mypet.getRespawnTime() + "sec");
+                lore.add(RESET + Translation.getString("Name.Respawntime", lang) + ": " + GOLD + mypet.getRespawnTime()
+                        + "sec");
             } else {
-                lore.add(RESET + Translation.getString("Name.HP", lang) + ": " + GOLD + String.format("%1.2f", mypet.getHealth()));
+                lore.add(RESET + Translation.getString("Name.HP", lang) + ": " + GOLD
+                        + String.format("%1.2f", mypet.getHealth()));
             }
         } else if (mypet.getRespawnTime() <= 0) {
-            lore.add(RESET + Translation.getString("Name.HP", lang) + ": " + GOLD + String.format("%1.2f", mypet.getHealth()));
+            lore.add(RESET + Translation.getString("Name.HP", lang) + ": " + GOLD
+                    + String.format("%1.2f", mypet.getHealth()));
         }
-        lore.add(RESET + Translation.getString("Name.Exp", lang) + ": " + GOLD + String.format("%1.2f", mypet.getExp()));
+        lore.add(
+                RESET + Translation.getString("Name.Exp", lang) + ": " + GOLD + String.format("%1.2f", mypet.getExp()));
         if (mypet.getInfo().containsKey("storage")) {
             TagCompound storage = mypet.getInfo().getAs("storage", TagCompound.class);
             if (storage.containsKey("level")) {
-                lore.add(RESET + Translation.getString("Name.Level", lang) + ": " + GOLD + storage.getAs("level", TagInt.class).getIntData());
+                lore.add(RESET + Translation.getString("Name.Level", lang) + ": " + GOLD
+                        + storage.getAs("level", TagInt.class).getIntData());
             }
         }
         lore.add(RESET + Translation.getString("Name.Type", lang) + ": " + GOLD + mypet.getPetType().name());
-        lore.add(RESET + Translation.getString("Name.Skilltree", lang) + ": " + GOLD + (mypet.getSkilltree() != null ? Colorizer.setColors(mypet.getSkilltree().getDisplayName()) : "-"));
+        lore.add(RESET + Translation.getString("Name.Skilltree", lang) + ": " + GOLD
+                + (mypet.getSkilltree() != null ? Colorizer.setColors(mypet.getSkilltree().getDisplayName()) : "-"));
         if (Configuration.Respawn.DISABLE_AUTO_RESPAWN) {
             if (mypet.getRespawnTime() > 0) {
                 lore.add(ChatColor.RED + Translation.getString("Name.Dead", lang));
@@ -428,7 +442,7 @@ public class Util {
                 return;
             }
             if (type.isAssignableFrom(clazz)) {
-                //noinspection unchecked
+                // noinspection unchecked
                 result.add(clazz);
             }
             getClassParents(clazz.getSuperclass(), type, result);

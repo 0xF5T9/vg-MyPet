@@ -81,7 +81,6 @@ public class MyPetExpEvent extends Event implements Cancellable {
         return handlers;
     }
 
-    @SuppressWarnings("unused")
     public static HandlerList getHandlerList() {
         return handlers;
     }

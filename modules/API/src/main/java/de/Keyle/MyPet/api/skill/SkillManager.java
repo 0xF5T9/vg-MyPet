@@ -32,6 +32,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+@SuppressWarnings("all")
+
 @ServiceName("SkillManager")
 @Load(Load.State.OnEnable)
 public class SkillManager implements ServiceContainer {

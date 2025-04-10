@@ -31,6 +31,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@SuppressWarnings("all")
+
 public class ItemTooltip {
 
     private static final Pattern MINECRAFT_VERSION_MATCHER = Pattern.compile("\\(MC: \\d\\.(\\d+)(?:\\.\\d+)?\\)");
@@ -105,7 +107,6 @@ public class ItemTooltip {
         return lore;
     }
 
-    @SuppressWarnings("unchecked")
     public String toJSONString() {
         if (!hasChanged) {
             return oldItem;
@@ -150,7 +151,7 @@ public class ItemTooltip {
                         jsonString += "a:";
                     }
                     if (MyPetApi.getCompatUtil().isCompatible("1.13")) {
-                    	jsonString += "\\\"" + lore.get(i).replaceAll("\"", "\\\\\"").replaceAll("\'", "\\\'") + "\\\"";
+                        jsonString += "\\\"" + lore.get(i).replaceAll("\"", "\\\\\"").replaceAll("\'", "\\\'") + "\\\"";
                         jsonString += "}";
                     } else {
                         jsonString += "\"" + lore.get(i).replaceAll("\"", "\\\\\"").replaceAll("\'", "\\\'") + "\"";

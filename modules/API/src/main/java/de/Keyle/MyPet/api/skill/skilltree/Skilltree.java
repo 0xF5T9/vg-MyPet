@@ -33,17 +33,23 @@ import lombok.Setter;
 
 import java.util.*;
 
+@SuppressWarnings("all")
+
 public class Skilltree {
 
     protected String skilltreeName;
-    @Getter @Setter protected String inheritedSkilltreeName;
+    @Getter
+    @Setter
+    protected String inheritedSkilltreeName;
     protected List<String> description = new ArrayList<>();
     protected SkilltreeIcon icon = null;
     protected String displayName = null;
     protected int maxLevel = 0;
     protected int requiredLevel = 0;
     protected int order = 0;
-    @Getter @Setter protected double weight = 1;
+    @Getter
+    @Setter
+    protected double weight = 1;
     protected Set<MyPetType> mobTypes = new HashSet<>();
     protected Map<LevelRule, Upgrade> upgrades = new HashMap<>();
     protected Map<LevelRule, String> notifications = new HashMap<>();
@@ -142,7 +148,8 @@ public class Skilltree {
     protected List<Upgrade> getUpgrades(int level, Set<String> computedSkilltrees) {
         List<Upgrade> upgrades = new ArrayList<>();
         computedSkilltrees.add(this.skilltreeName);
-        if (inheritedSkilltreeName != null && !inheritedSkilltreeName.isEmpty() && !computedSkilltrees.contains(inheritedSkilltreeName)) {
+        if (inheritedSkilltreeName != null && !inheritedSkilltreeName.isEmpty()
+                && !computedSkilltrees.contains(inheritedSkilltreeName)) {
             if (MyPetApi.getSkilltreeManager().hasSkilltree(inheritedSkilltreeName)) {
                 upgrades.addAll(MyPetApi
                         .getSkilltreeManager()

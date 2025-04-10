@@ -24,12 +24,13 @@ import de.Keyle.MyPet.api.util.animation.ParticleAnimation;
 import de.Keyle.MyPet.api.util.location.LocationHolder;
 import org.bukkit.Location;
 
+@SuppressWarnings("all")
+
 public abstract class FixedCircleAnimation extends ParticleAnimation {
     protected final double radius;
     protected final double height;
     private final int number;
     private final int anglePerSpot;
-
 
     public FixedCircleAnimation(double radius, double height, int number, LocationHolder location) {
         super(10, location);

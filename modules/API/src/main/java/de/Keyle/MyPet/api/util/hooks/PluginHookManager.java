@@ -34,9 +34,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.util.*;
 
+@SuppressWarnings("all")
+
 /**
- * The {@link PluginHookManager} manages all interactions with other plugins. Hooks are stored by class and by the
- * interfaces they implement so they can also be retrieved by them. You can get instances of other plugins and check if
+ * The {@link PluginHookManager} manages all interactions with other plugins.
+ * Hooks are stored by class and by the
+ * interfaces they implement so they can also be retrieved by them. You can get
+ * instances of other plugins and check if
  * other plugins are active.
  */
 public class PluginHookManager {
@@ -45,10 +49,12 @@ public class PluginHookManager {
     protected Map<String, PluginHook> hookByName = new HashMap<>();
     protected Map<Class<? extends PluginHook>, PluginHook> hookByClass = new HashMap<>();
     protected Queue<PluginHook> registeredHooks = new ArrayDeque<>();
-    @Getter public ConfigurationYAML config;
+    @Getter
+    public ConfigurationYAML config;
 
     public PluginHookManager() {
-        File hookConfigFile = new File(MyPetApi.getPlugin().getDataFolder().getPath() + File.separator + "hooks-config.yml");
+        File hookConfigFile = new File(
+                MyPetApi.getPlugin().getDataFolder().getPath() + File.separator + "hooks-config.yml");
         config = new ConfigurationYAML(hookConfigFile);
         config.getConfig().options().header("" +
                 "#######################################################################\n" +
@@ -61,8 +67,10 @@ public class PluginHookManager {
     }
 
     /**
-     * Register new hooks here. A hook needs the {@link PluginHookName} annotation to be accepted.
-     * Registered hooks will not enabled after MyPet has loaded. Use enableHook instead.
+     * Register new hooks here. A hook needs the {@link PluginHookName} annotation
+     * to be accepted.
+     * Registered hooks will not enabled after MyPet has loaded. Use enableHook
+     * instead.
      *
      * @param hookClass the hook class
      */
@@ -84,7 +92,8 @@ public class PluginHookManager {
                 PluginHook hook = hookClass.newInstance();
                 registeredHooks.add(hook);
             } catch (Throwable e) {
-                MyPetApi.getLogger().warning("Error occured while enabling " + pluginName + " (" + Bukkit.getPluginManager().getPlugin(pluginName).getDescription().getVersion() + ") hook.");
+                MyPetApi.getLogger().warning("Error occured while enabling " + pluginName + " ("
+                        + Bukkit.getPluginManager().getPlugin(pluginName).getDescription().getVersion() + ") hook.");
                 e.printStackTrace();
             }
         }
@@ -127,7 +136,8 @@ public class PluginHookManager {
                 hookByClass.put(hook.getClass(), hook);
 
                 String message = hook.getPluginName();
-                message += " (" + Bukkit.getPluginManager().getPlugin(hook.getPluginName()).getDescription().getVersion() + ")";
+                message += " ("
+                        + Bukkit.getPluginManager().getPlugin(hook.getPluginName()).getDescription().getVersion() + ")";
                 if (!hookNameAnnotation.classPath().equalsIgnoreCase("")) {
                     message += " (" + hookNameAnnotation.classPath() + ")";
                 }
@@ -136,7 +146,10 @@ public class PluginHookManager {
                 return true;
             }
         } catch (Throwable e) {
-            MyPetApi.getLogger().warning("Error occured while enabling " + hook.getPluginName() + " (" + Bukkit.getPluginManager().getPlugin(hook.getPluginName()).getDescription().getVersion() + ") hook.");
+            MyPetApi.getLogger()
+                    .warning("Error occured while enabling " + hook.getPluginName() + " ("
+                            + Bukkit.getPluginManager().getPlugin(hook.getPluginName()).getDescription().getVersion()
+                            + ") hook.");
             e.printStackTrace();
         }
         return false;

@@ -51,7 +51,6 @@ public class MyPetLoadEvent extends Event {
         return handlers;
     }
 
-    @SuppressWarnings("unused")
     public static HandlerList getHandlerList() {
         return handlers;
     }

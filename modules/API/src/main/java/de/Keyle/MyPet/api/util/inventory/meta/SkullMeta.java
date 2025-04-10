@@ -102,11 +102,9 @@ public class SkullMeta implements IconMeta {
         return false;
     }
 
-    @SuppressWarnings("unchecked")
     public void applyTo(TagCompound tag) {
         if (hasOwner()) {
             TagCompound ownerTag = new TagCompound();
-
 
             ownerTag.put("Name", new TagString(getOwner()));
 

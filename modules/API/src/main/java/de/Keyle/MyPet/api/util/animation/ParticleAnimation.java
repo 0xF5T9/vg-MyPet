@@ -43,6 +43,8 @@ package de.Keyle.MyPet.api.util.animation;
 import de.Keyle.MyPet.api.util.location.LocationHolder;
 import org.bukkit.Location;
 
+@SuppressWarnings("all")
+
 public abstract class ParticleAnimation extends Animation {
 
     public ParticleAnimation(int length, LocationHolder location) {

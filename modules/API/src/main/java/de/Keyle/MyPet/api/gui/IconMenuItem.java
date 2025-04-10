@@ -71,7 +71,6 @@ public class IconMenuItem implements Cloneable {
         return this;
     }
 
-    @SuppressWarnings("unchecked")
     public IconMenuItem setMeta(ItemMeta meta, boolean useTitle, boolean useLore) {
         this.meta = null;
 

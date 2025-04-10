@@ -26,18 +26,17 @@ import de.Keyle.MyPet.api.Util;
 import org.bukkit.Bukkit;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+@SuppressWarnings("all")
 
 public class CompatUtil {
     private static final Pattern PACKAGE_VERSION_MATCHER = Pattern.compile(".*\\.(v\\d+_\\d+_R\\d+)(?:.+)?");
@@ -77,13 +76,15 @@ public class CompatUtil {
                 for (int i = special; i > 0; i--)
                     try {
                         String specVers = internalVersion + "_" + i;
-                        classPath = "de.Keyle.MyPet.compat." + specVers + "." + path + (path != null && !path.equals("") ? "." : "") + className;
+                        classPath = "de.Keyle.MyPet.compat." + specVers + "." + path
+                                + (path != null && !path.equals("") ? "." : "") + className;
                         Class.forName(classPath);
                         break;
                     } catch (ClassNotFoundException ignored) {
                     }
             } else {
-                classPath = "de.Keyle.MyPet.compat." + internalVersion + "." + path + (path != null && !path.equals("") ? "." : "") + className;
+                classPath = "de.Keyle.MyPet.compat." + internalVersion + "." + path
+                        + (path != null && !path.equals("") ? "." : "") + className;
             }
         }
 
@@ -106,7 +107,8 @@ public class CompatUtil {
             Constructor<T> constructor = (Constructor<T>) compatClass.getConstructor(paramterClasses);
             return constructor.newInstance(parameters);
 
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException
+                | InvocationTargetException e) {
             e.printStackTrace();
         }
 
@@ -136,7 +138,8 @@ public class CompatUtil {
     private String getBukkitVersionFromMinecraftVersion() {
         HashMap<String, String> versionMap = new HashMap<>();
         try {
-            InputStreamReader streamReader = new InputStreamReader(MyPetApi.getPlugin().getResource("versionmatcher.csv"), StandardCharsets.UTF_8);
+            InputStreamReader streamReader = new InputStreamReader(
+                    MyPetApi.getPlugin().getResource("versionmatcher.csv"), StandardCharsets.UTF_8);
             BufferedReader reader = new BufferedReader(streamReader);
             Bukkit.getConsoleSender().sendMessage("Trying to read");
             String line;
@@ -145,7 +148,7 @@ public class CompatUtil {
                 String[] parts = line.split(",");
                 versionMap.put(parts[0], parts[1]);
             }
-        } catch(Exception ignored) {
+        } catch (Exception ignored) {
         }
 
         String bukkitVersion = null;

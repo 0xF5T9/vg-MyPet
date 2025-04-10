@@ -33,6 +33,8 @@ import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+@SuppressWarnings("all")
+
 public class Translation {
     private static Translation instance = null;
 
@@ -127,7 +129,8 @@ public class Translation {
         } catch (IOException ignored) {
         }
 
-        File localeFile = new File(MyPetApi.getPlugin().getDataFolder() + File.separator + "locale" + File.separator + "MyPet_" + localeString + ".properties");
+        File localeFile = new File(MyPetApi.getPlugin().getDataFolder() + File.separator + "locale" + File.separator
+                + "MyPet_" + localeString + ".properties");
         if (localeFile.exists()) {
             try {
                 newLocale.load(new InputStreamReader(new FileInputStream(localeFile), "UTF-8"));

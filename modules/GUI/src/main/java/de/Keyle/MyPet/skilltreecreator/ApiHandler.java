@@ -20,7 +20,6 @@
 
 package de.Keyle.MyPet.skilltreecreator;
 
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -34,6 +33,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("all")
+
 public class ApiHandler {
 
     private File skilltreeDir;
@@ -43,7 +44,6 @@ public class ApiHandler {
         this.skilltreeDir = skilltreeDir;
     }
 
-    @SuppressWarnings("unchecked")
     public Response handle(IHTTPSession session) {
         String uri = session.getUri();
 
@@ -51,7 +51,8 @@ public class ApiHandler {
             case GET: {
                 if (uri.equals("/api/skilltrees")) {
                     JsonArray jsonSkilltrees = new JsonArray();
-                    File[] jsonFiles = skilltreeDir.listFiles(pathname -> pathname.getAbsolutePath().endsWith(".st.json"));
+                    File[] jsonFiles = skilltreeDir
+                            .listFiles(pathname -> pathname.getAbsolutePath().endsWith(".st.json"));
                     if (jsonFiles != null) {
                         for (File jsonFile : jsonFiles) {
                             JsonObject jsonSkilltree = loadJsonObject(jsonFile);
@@ -72,7 +73,8 @@ public class ApiHandler {
 
                         JsonArray jsonArray = loadJsonArray(bodyMap.get("postData"));
                         if (jsonArray != null) {
-                            File[] jsonFiles = skilltreeDir.listFiles(pathname -> pathname.getAbsolutePath().endsWith(".st.json"));
+                            File[] jsonFiles = skilltreeDir
+                                    .listFiles(pathname -> pathname.getAbsolutePath().endsWith(".st.json"));
                             if (jsonFiles != null) {
                                 for (File jsonFile : jsonFiles) {
                                     jsonFile.delete();
@@ -96,7 +98,8 @@ public class ApiHandler {
     }
 
     public JsonArray loadJsonArray(File jsonFile) {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(jsonFile), StandardCharsets.UTF_8))) {
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(new FileInputStream(jsonFile), StandardCharsets.UTF_8))) {
             return gson.fromJson(reader, JsonArray.class);
         } catch (Exception e) {
             e.printStackTrace();
@@ -114,7 +117,8 @@ public class ApiHandler {
     }
 
     public JsonObject loadJsonObject(File jsonFile) {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(jsonFile), StandardCharsets.UTF_8))) {
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(new FileInputStream(jsonFile), StandardCharsets.UTF_8))) {
             return gson.fromJson(reader, JsonObject.class);
         } catch (Exception e) {
             e.printStackTrace();
@@ -125,7 +129,8 @@ public class ApiHandler {
     public void saveJsonObject(File jsonFile, JsonObject jsonObject) {
         String prettyJsonString = gson.toJson(jsonObject).replace("\\u003c", "<").replace("\\u003e", ">");
         try {
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(jsonFile), StandardCharsets.UTF_8));
+            BufferedWriter writer = new BufferedWriter(
+                    new OutputStreamWriter(new FileOutputStream(jsonFile), StandardCharsets.UTF_8));
             writer.write(prettyJsonString);
             writer.close();
         } catch (IOException e) {

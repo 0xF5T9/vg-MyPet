@@ -47,6 +47,8 @@ import java.util.stream.Collectors;
 
 import static de.Keyle.MyPet.api.util.configuration.Try.tryToLoad;
 
+@SuppressWarnings("all")
+
 public class SkillTreeLoaderJSON {
 
     final static Pattern LEVEL_RULE_REGEX = Pattern.compile("(?:%(\\d+))|(?:<(\\d+))|(?:>(\\d+))");
@@ -97,7 +99,6 @@ public class SkillTreeLoaderJSON {
                 Settings settings = new Settings("Permission");
                 settings.load(permission);
                 skilltree.addRequirementSettings(settings);
-                //TODO warnung zum aktualisieren
             }
         });
         tryToLoad("Display", () -> {
@@ -243,10 +244,11 @@ public class SkillTreeLoaderJSON {
                                     LevelRule levelRule = loadLevelRule(levelRuleString);
 
                                     JsonObject upgradeObject = upgradesObject.getAsJsonObject(levelRuleString);
-                                    tryToLoad("Skills." + skillName + ".Upgrades." + levelRuleString + ".Upgrade", () -> {
-                                        Upgrade upgrade = loadUpgrade(skillName, upgradeObject);
-                                        skilltree.addUpgrade(levelRule, upgrade);
-                                    });
+                                    tryToLoad("Skills." + skillName + ".Upgrades." + levelRuleString + ".Upgrade",
+                                            () -> {
+                                                Upgrade upgrade = loadUpgrade(skillName, upgradeObject);
+                                                skilltree.addUpgrade(levelRule, upgrade);
+                                            });
                                 });
                             }
                         }
@@ -381,7 +383,8 @@ public class SkillTreeLoaderJSON {
                 upgrade = new RangedUpgrade()
                         .setDamageModifier(parseNumberModifier(get(upgradeObject, "damage")))
                         .setRateOfFireModifier(parseIntegerModifier(get(upgradeObject, "rate")))
-                        .setProjectileModifier(parseEnumModifier(get(upgradeObject, "projectile"), Ranged.Projectile.class));
+                        .setProjectileModifier(
+                                parseEnumModifier(get(upgradeObject, "projectile"), Ranged.Projectile.class));
                 break;
             }
             case "ride": {
@@ -434,7 +437,8 @@ public class SkillTreeLoaderJSON {
     }
 
     private static JsonObject loadJsonObject(File jsonFile) throws IOException {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(jsonFile), StandardCharsets.UTF_8))) {
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(new FileInputStream(jsonFile), StandardCharsets.UTF_8))) {
             Gson gson = new Gson();
             return gson.fromJson(reader, JsonObject.class);
         }

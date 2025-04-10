@@ -24,6 +24,8 @@ import de.Keyle.MyPet.api.util.animation.ParticleAnimation;
 import de.Keyle.MyPet.api.util.location.LocationHolder;
 import org.bukkit.Location;
 
+@SuppressWarnings("all")
+
 public abstract class CircleAnimation extends ParticleAnimation {
     protected final double radius;
     protected final double anglePerTick;

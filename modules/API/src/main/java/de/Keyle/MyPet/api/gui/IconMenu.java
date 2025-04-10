@@ -36,6 +36,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("all")
+
 public class IconMenu implements Listener {
     private IconMenuInventory inventory;
     private String title;
@@ -93,7 +95,8 @@ public class IconMenu implements Listener {
             return;
         }
         if (inventory == null) {
-            inventory = MyPetApi.getCompatUtil().getCompatInstance(IconMenuInventory.class, "util.iconmenu", "IconMenuInventory");
+            inventory = MyPetApi.getCompatUtil().getCompatInstance(IconMenuInventory.class, "util.iconmenu",
+                    "IconMenuInventory");
         }
         inventory.open(this, player);
     }
@@ -123,7 +126,8 @@ public class IconMenu implements Listener {
 
     @EventHandler
     void onInventoryClose(InventoryCloseEvent event) {
-        if (inventory != null && inventory.isMenuInventory(event.getInventory()) && inventory.getViewers().size() == 0) {
+        if (inventory != null && inventory.isMenuInventory(event.getInventory())
+                && inventory.getViewers().size() == 0) {
             inventory = null;
         }
     }
@@ -141,7 +145,8 @@ public class IconMenu implements Listener {
             event.setResult(Event.Result.DENY);
             int slot = event.getRawSlot();
             if (slot >= 0 && slot < getSize() && options.containsKey(slot)) {
-                final IconMenu.OptionClickEvent e = new IconMenu.OptionClickEvent((Player) event.getWhoClicked(), slot, this, options.get(slot));
+                final IconMenu.OptionClickEvent e = new IconMenu.OptionClickEvent((Player) event.getWhoClicked(), slot,
+                        this, options.get(slot));
                 handler.onOptionClick(e);
 
                 final Player p = (Player) event.getWhoClicked();

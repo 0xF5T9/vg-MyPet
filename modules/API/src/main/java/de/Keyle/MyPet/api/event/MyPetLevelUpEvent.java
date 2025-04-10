@@ -40,7 +40,6 @@ public class MyPetLevelUpEvent extends MyPetLevelEvent {
         return handlers;
     }
 
-    @SuppressWarnings("unused")
     public static HandlerList getHandlerList() {
         return handlers;
     }

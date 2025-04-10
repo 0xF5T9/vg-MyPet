@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
+@SuppressWarnings("all")
+
 public class AIGoalSelector {
 
     private Map<String, AIGoal> AIGoalMap = new HashMap<>();

@@ -35,7 +35,6 @@ public class MyPetActiveTargetSkillEvent extends MyPetActiveSkillEvent {
         this.target = target;
     }
 
-    @SuppressWarnings("unused")
     public static HandlerList getHandlerList() {
         return handlers;
     }

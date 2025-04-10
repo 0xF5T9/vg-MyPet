@@ -22,35 +22,56 @@ package de.Keyle.MyPet.api.util.intervaltree;
 
 import java.util.*;
 
+@SuppressWarnings("all")
+
 /**
- * An implementation of a Centered Interval Tree for efficient search in a set of intervals. See
- * <a href="https://en.wikipedia.org/wiki/Interval_tree">https://en.wikipedia.org/wiki/Interval_tree</a>.
+ * An implementation of a Centered Interval Tree for efficient search in a set
+ * of intervals. See
+ * <a href=
+ * "https://en.wikipedia.org/wiki/Interval_tree">https://en.wikipedia.org/wiki/Interval_tree</a>.
  *
  * <p>
- * The tree functions as a set, meaning that it will not store an interval more than
- * once. More formally, for any two distinct intervals x and y within the tree, it is
- * guaranteed that x.equals(y) will evaluate to false. If you try to add an interval to the tree,
+ * The tree functions as a set, meaning that it will not store an interval more
+ * than
+ * once. More formally, for any two distinct intervals x and y within the tree,
+ * it is
+ * guaranteed that x.equals(y) will evaluate to false. If you try to add an
+ * interval to the tree,
  * which is already in it, the tree will reject it. See the documentation of
- * {@link #add(Interval) the add method} for more information. The tree will also <strong>not</strong> accept
- * {@code null} or empty intervals, meaning intervals whose {@link Interval#isEmpty()}
+ * {@link #add(Interval) the add method} for more information. The tree will
+ * also <strong>not</strong> accept
+ * {@code null} or empty intervals, meaning intervals whose
+ * {@link Interval#isEmpty()}
  * method evaluates to {@code true}.
  * </p>
  * <p>
- * The {@link #iterator()} method of the tree returns a fail-fast iterator, which will
- * throw a {@link ConcurrentModificationException}, if the tree is modified in any form
- * during the iteration, other than by using the iterator's own {@code remove} method. However,
- * this is done in a best-effort manner, since it is generally hard to guarantee this behaviour
+ * The {@link #iterator()} method of the tree returns a fail-fast iterator,
+ * which will
+ * throw a {@link ConcurrentModificationException}, if the tree is modified in
+ * any form
+ * during the iteration, other than by using the iterator's own {@code remove}
+ * method. However,
+ * this is done in a best-effort manner, since it is generally hard to guarantee
+ * this behaviour
  * while using non-atomic and not synchronized methods.
  * </p>
  * <p>
- * The tree relies on the usage of a subclass of the {@link Interval} class to represent the
- * intervals. The majority of the interval methods are already implemented within the
- * {@code Interval} class and don't have to be implemented by the extending class. Comparisons
- * between the intervals are also pre-implemented in the {@code Interval} class and use the
- * start and endpoints to create a total order of all stored intervals. However, if the tree
- * needs to store intervals that have the same start and end points but represent different
- * logical entities, you need a subclass that overwrites the {@code equals}, {@code hashCode}
- * and {@code compareTo} methods. See the documentation of {@link Interval} for more information.
+ * The tree relies on the usage of a subclass of the {@link Interval} class to
+ * represent the
+ * intervals. The majority of the interval methods are already implemented
+ * within the
+ * {@code Interval} class and don't have to be implemented by the extending
+ * class. Comparisons
+ * between the intervals are also pre-implemented in the {@code Interval} class
+ * and use the
+ * start and endpoints to create a total order of all stored intervals. However,
+ * if the tree
+ * needs to store intervals that have the same start and end points but
+ * represent different
+ * logical entities, you need a subclass that overwrites the {@code equals},
+ * {@code hashCode}
+ * and {@code compareTo} methods. See the documentation of {@link Interval} for
+ * more information.
  * </p>
  *
  * @param <T> The type for the start and end point of the interval
@@ -58,8 +79,10 @@ import java.util.*;
 public class IntervalTree<T extends Comparable<? super T>, S> extends AbstractSet<Interval<T, S>> {
 
     /**
-     * The root of the current interval tree. It is {@code null} initially, when the tree is
-     * empty and may change as the result of adding or removing intervals to the tree.
+     * The root of the current interval tree. It is {@code null} initially, when the
+     * tree is
+     * empty and may change as the result of adding or removing intervals to the
+     * tree.
      */
     TreeNode<T, S> root;
 
@@ -69,15 +92,19 @@ public class IntervalTree<T extends Comparable<? super T>, S> extends AbstractSe
     int size;
 
     /**
-     * Adds an interval to the tree. If the interval is empty, it is rejected and not
+     * Adds an interval to the tree. If the interval is empty, it is rejected and
+     * not
      * stored in the tree. This operation may cause a rebalancing of the tree, which
-     * in turn may cause intervals to be {@link TreeNode#assimilateOverlappingIntervals(TreeNode) assimilated}.
-     * This is why this operation may run in {@code O(n)} worst-case time, even though
+     * in turn may cause intervals to be
+     * {@link TreeNode#assimilateOverlappingIntervals(TreeNode) assimilated}.
+     * This is why this operation may run in {@code O(n)} worst-case time, even
+     * though
      * on average it should run in {@code O(logn)} due to the nature binary trees.
      *
      * @param interval The interval to be added to the tree.
-     * @return {@code true}, if the tree has been modified as a result of the operation,
-     * or {@code false} otherwise.
+     * @return {@code true}, if the tree has been modified as a result of the
+     *         operation,
+     *         or {@code false} otherwise.
      */
     @Override
     public boolean add(Interval<T, S> interval) {
@@ -90,30 +117,42 @@ public class IntervalTree<T extends Comparable<? super T>, S> extends AbstractSe
     }
 
     /**
-     * Searches for and returns all intervals stored in the tree, that contain a given
-     * query point. This operation is guaranteed to run in {@code O(logn + k)}, where
-     * {@code n} is the size of the tree and {@code k} is the size of the returned set,
-     * provided that the time complexity of iterating over the intervals stored in each
-     * visited node is amortized {@code O(1)}. This assumption is met for the current
+     * Searches for and returns all intervals stored in the tree, that contain a
+     * given
+     * query point. This operation is guaranteed to run in {@code O(logn + k)},
+     * where
+     * {@code n} is the size of the tree and {@code k} is the size of the returned
+     * set,
+     * provided that the time complexity of iterating over the intervals stored in
+     * each
+     * visited node is amortized {@code O(1)}. This assumption is met for the
+     * current
      * implementation of {@link TreeNode}, where {@link TreeSet}s are used.
      *
      * @param point The query point.
-     * @return A set containing all intervals from the tree, intersecting the query point.
+     * @return A set containing all intervals from the tree, intersecting the query
+     *         point.
      */
     public Set<Interval<T, S>> query(T point) {
         return TreeNode.query(root, point, new HashSet<>());
     }
 
     /**
-     * Searches for and returns all intervals stored in the tree, that intersect a given
-     * query interval. This operation is guaranteed to run in {@code O(logn + k)}, where
-     * {@code n} is the size of the tree and {@code k} is the size of the returned set,
-     * provided that the time complexity of iterating over the intervals stored in each
-     * visited node is amortized {@code O(1)}. This assumption is met for the current
+     * Searches for and returns all intervals stored in the tree, that intersect a
+     * given
+     * query interval. This operation is guaranteed to run in {@code O(logn + k)},
+     * where
+     * {@code n} is the size of the tree and {@code k} is the size of the returned
+     * set,
+     * provided that the time complexity of iterating over the intervals stored in
+     * each
+     * visited node is amortized {@code O(1)}. This assumption is met for the
+     * current
      * implementation of {@link TreeNode}, where {@link TreeSet}s are used.
      *
      * @param interval The query interval.
-     * @return A set containing all intervals from the tree, intersecting the query interval.
+     * @return A set containing all intervals from the tree, intersecting the query
+     *         interval.
      */
     public Set<Interval<T, S>> query(Interval<T, S> interval) {
         Set<Interval<T, S>> result = new HashSet<>();
@@ -151,11 +190,16 @@ public class IntervalTree<T extends Comparable<? super T>, S> extends AbstractSe
     }
 
     /**
-     * Removes an interval from the tree, if it was stored in it. This operation may cause the
-     * {@link TreeNode#deleteNode(TreeNode) deletion of a node}, which in turn may cause
-     * rebalancing of the tree and the {@link TreeNode#assimilateOverlappingIntervals(TreeNode) assimilation}
-     * of intervals from one node to another. This is why this operation may run in {@code O(n)}
-     * worst-case time, even though on average it should run in {@code O(logn)} due to the
+     * Removes an interval from the tree, if it was stored in it. This operation may
+     * cause the
+     * {@link TreeNode#deleteNode(TreeNode) deletion of a node}, which in turn may
+     * cause
+     * rebalancing of the tree and the
+     * {@link TreeNode#assimilateOverlappingIntervals(TreeNode) assimilation}
+     * of intervals from one node to another. This is why this operation may run in
+     * {@code O(n)}
+     * worst-case time, even though on average it should run in {@code O(logn)} due
+     * to the
      * nature binary trees.
      *
      * @param interval
@@ -169,7 +213,6 @@ public class IntervalTree<T extends Comparable<? super T>, S> extends AbstractSe
         root = TreeNode.removeInterval(this, root, interval);
         return size == sizeBeforeOperation;
     }
-
 
     // =========================================================================
     // ============== Iterator over the Intervals in the tree ==================
@@ -225,7 +268,6 @@ public class IntervalTree<T extends Comparable<? super T>, S> extends AbstractSe
         }
     }
 
-
     // =========================================================================
     // ================== Methods from the Set interface =======================
     // =========================================================================
@@ -256,7 +298,7 @@ public class IntervalTree<T extends Comparable<? super T>, S> extends AbstractSe
      *
      * @param o The query object.
      * @return {@code true}, if the object is stored in the tree, or {@code false}
-     * otherwise.
+     *         otherwise.
      */
     @Override
     public boolean contains(Object o) {

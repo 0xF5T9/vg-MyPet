@@ -38,6 +38,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("all")
+
 public class WebServer extends NanoWSD {
 
     static Map<String, String> MIME_TYPES = new HashMap<>();
@@ -81,7 +83,6 @@ public class WebServer extends NanoWSD {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public Response serve(IHTTPSession session) {
         String uri = session.getUri();
 
@@ -138,7 +139,8 @@ public class WebServer extends NanoWSD {
     }
 
     public static Response newFixedFileResponse(File file, String mime) throws FileNotFoundException {
-        Response res = Response.newFixedLengthResponse(Status.OK, mime, new FileInputStream(file), (long) ((int) file.length()));
+        Response res = Response.newFixedLengthResponse(Status.OK, mime, new FileInputStream(file),
+                (long) ((int) file.length()));
         res.addHeader("Accept-Ranges", "bytes");
         return res;
     }

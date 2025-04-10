@@ -45,6 +45,8 @@ import de.Keyle.MyPet.api.util.location.LocationHolder;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
+@SuppressWarnings("all")
+
 public abstract class Animation {
     int taskID = -1;
     protected int framesPerTick = 1;

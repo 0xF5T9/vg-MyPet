@@ -27,6 +27,8 @@ import de.Keyle.MyPet.api.util.inventory.material.MaterialHolder;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+@SuppressWarnings("all")
+
 public abstract class ConfigItem {
 
     protected ItemStack item = null;
@@ -42,7 +44,7 @@ public abstract class ConfigItem {
     }
 
     public ConfigItem(String data) {
-        if(data.startsWith(".")) {
+        if (data.startsWith(".")) {
             // Assumption: This is a 1.20.5+ Item
             load(data.replace(". ", ""));
             return;
@@ -54,7 +56,8 @@ public abstract class ConfigItem {
             return;
         }
         if (Util.isInt(splitData[0])) {
-            MyPetApi.getLogger().warning("Number IDs are not supported anymore! You need to use 1.13 item IDs from now on. Please check your configs.");
+            MyPetApi.getLogger().warning(
+                    "Number IDs are not supported anymore! You need to use 1.13 item IDs from now on. Please check your configs.");
             return;
         }
 
@@ -69,9 +72,9 @@ public abstract class ConfigItem {
     }
 
     public static ConfigItem createConfigItem(String data) {
-    	if(data.equalsIgnoreCase("none")) {	//For enabling non itembound interaction (riding etc)
-    		return null;
-    	}
+        if (data.equalsIgnoreCase("none")) { // For enabling non itembound interaction (riding etc)
+            return null;
+        }
         return MyPetApi.getCompatUtil().getCompatInstance(ConfigItem.class, "util", "ConfigItem", data);
     }
 
@@ -124,7 +127,8 @@ public abstract class ConfigItem {
     public abstract boolean compare(Object compareItem);
 
     public void load(String data) {
-        MyPetApi.getLogger().warning("You are trying to use 1.20.5+ item-NBT! You need to use 1.13 item IDs and NBT for this version.");
+        MyPetApi.getLogger().warning(
+                "You are trying to use 1.20.5+ item-NBT! You need to use 1.13 item IDs and NBT for this version.");
     }
 
     public abstract void load(MaterialHolder material, String data);

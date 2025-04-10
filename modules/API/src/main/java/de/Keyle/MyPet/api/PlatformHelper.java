@@ -39,10 +39,13 @@ import org.bukkit.plugin.Plugin;
 import java.io.*;
 import java.util.UUID;
 
+@SuppressWarnings("all")
+
 public abstract class PlatformHelper {
 
     /**
-     * @param location the {@link Location} around which players must be to see the effect
+     * @param location the {@link Location} around which players must be to see the
+     *                 effect
      * @param effect   list of effects: https://gist.github.com/riking/5759002
      * @param offsetX  the amount to be randomly offset by in the X axis
      * @param offsetY  the amount to be randomly offset by in the Y axis
@@ -51,14 +54,17 @@ public abstract class PlatformHelper {
      * @param count    the number of particles
      * @param radius   the radius around the location
      */
-    public abstract void playParticleEffect(Location location, String effect, float offsetX, float offsetY, float offsetZ, float speed, int count, int radius, de.Keyle.MyPet.api.compat.Compat<Object> data);
+    public abstract void playParticleEffect(Location location, String effect, float offsetX, float offsetY,
+            float offsetZ, float speed, int count, int radius, de.Keyle.MyPet.api.compat.Compat<Object> data);
 
-    public void playParticleEffect(Location location, String effect, float offsetX, float offsetY, float offsetZ, float speed, int count, int radius) {
+    public void playParticleEffect(Location location, String effect, float offsetX, float offsetY, float offsetZ,
+            float speed, int count, int radius) {
         playParticleEffect(location, effect, offsetX, offsetY, offsetZ, speed, count, radius, null);
     }
 
     /**
-     * @param location the {@link Location} around which players must be to see the effect
+     * @param location the {@link Location} around which players must be to see the
+     *                 effect
      * @param effect   list of effects: https://gist.github.com/riking/5759002
      * @param offsetX  the amount to be randomly offset by in the X axis
      * @param offsetY  the amount to be randomly offset by in the Y axis
@@ -67,9 +73,12 @@ public abstract class PlatformHelper {
      * @param count    the number of particles
      * @param radius   the radius around the location
      */
-    public abstract void playParticleEffect(Player player, Location location, String effect, float offsetX, float offsetY, float offsetZ, float speed, int count, int radius, de.Keyle.MyPet.api.compat.Compat<Object> data);
+    public abstract void playParticleEffect(Player player, Location location, String effect, float offsetX,
+            float offsetY, float offsetZ, float speed, int count, int radius,
+            de.Keyle.MyPet.api.compat.Compat<Object> data);
 
-    public void playParticleEffect(Player player, Location location, String effect, float offsetX, float offsetY, float offsetZ, float speed, int count, int radius) {
+    public void playParticleEffect(Player player, Location location, String effect, float offsetX, float offsetY,
+            float offsetZ, float speed, int count, int radius) {
         playParticleEffect(player, location, effect, offsetX, offsetY, offsetZ, speed, count, radius, null);
     }
 

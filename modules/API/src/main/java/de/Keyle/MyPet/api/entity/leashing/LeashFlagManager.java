@@ -27,6 +27,8 @@ import de.Keyle.MyPet.api.util.service.ServiceName;
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("all")
+
 @ServiceName("LeashFlagManager")
 @Load(Load.State.OnLoad)
 public class LeashFlagManager implements ServiceContainer {

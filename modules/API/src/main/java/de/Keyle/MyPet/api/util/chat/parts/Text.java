@@ -40,7 +40,6 @@
 
 package de.Keyle.MyPet.api.util.chat.parts;
 
-
 import com.google.gson.JsonObject;
 
 public class Text extends MessagePart {
@@ -50,7 +49,6 @@ public class Text extends MessagePart {
         this.text = text;
     }
 
-    @SuppressWarnings("unchecked")
     public JsonObject toJson() {
         JsonObject json = super.toJson();
         json.addProperty("text", text);

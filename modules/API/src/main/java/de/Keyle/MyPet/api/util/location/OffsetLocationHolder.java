@@ -42,6 +42,8 @@ package de.Keyle.MyPet.api.util.location;
 
 import org.bukkit.Location;
 
+@SuppressWarnings("all")
+
 public class OffsetLocationHolder extends LocationHolder<LocationHolder> {
 
     private LocationHolder location;

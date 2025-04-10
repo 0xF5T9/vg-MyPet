@@ -35,8 +35,10 @@ import java.util.Map;
 public class ExperienceCalculatorManager implements ServiceContainer {
 
     protected Map<String, Class<? extends ExperienceCalculator>> calculators = new HashMap<>();
-    @Getter() protected ExperienceCalculator defaultCalculator = new DefaultExperienceCalculator();
-    @Getter() protected ExperienceCalculator calculator = defaultCalculator;
+    @Getter()
+    protected ExperienceCalculator defaultCalculator = new DefaultExperienceCalculator();
+    @Getter()
+    protected ExperienceCalculator calculator = defaultCalculator;
     protected ExperienceCache cache;
 
     @Override
@@ -45,7 +47,7 @@ public class ExperienceCalculatorManager implements ServiceContainer {
         return true;
     }
 
-    public void switchCalculator(@NonNull String calculator) {
+    public void switchCalculator(String calculator) {
         if (calculator == null) {
             calculator = "Default";
         }
@@ -59,7 +61,8 @@ public class ExperienceCalculatorManager implements ServiceContainer {
                         this.calculator = newCalculator;
                     }
                 } catch (Throwable e) {
-                    MyPetApi.getLogger().warning("There was an error loading the experience calculator. Please check your setup.");
+                    MyPetApi.getLogger()
+                            .warning("There was an error loading the experience calculator. Please check your setup.");
                     MyPetApi.getLogger().warning("  " + e.getMessage());
                     this.calculator = defaultCalculator;
                 }
