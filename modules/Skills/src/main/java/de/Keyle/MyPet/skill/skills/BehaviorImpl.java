@@ -82,14 +82,14 @@ public class BehaviorImpl implements Behavior {
         List<BehaviorMode> activeBehaviors = new ArrayList<>(this.activeBehaviors);
         Collections.sort(activeBehaviors);
         behaviorCycler = Iterables.cycle(activeBehaviors).iterator();
-        //noinspection StatementWithEmptyBody
+        // noinspection StatementWithEmptyBody
         while (behaviorCycler.next() != selectedBehavior) {
         }
     }
 
     public void setBehavior(BehaviorMode mode) {
         selectedBehavior = mode;
-        //noinspection StatementWithEmptyBody
+        // noinspection StatementWithEmptyBody
         while (behaviorCycler.next() != selectedBehavior) {
         }
     }
@@ -135,41 +135,42 @@ public class BehaviorImpl implements Behavior {
     }
 
     public String toPrettyString(String locale) {
-        String activeModes = ChatColor.GOLD + Translation.getString("Name.Normal", locale) + ChatColor.RESET;
+        String activeModes = "§x§f§c§9§8§6§7" + Translation.getString("Name.Normal", locale) + ChatColor.RESET;
         if (activeBehaviors.contains(Friendly)) {
-            activeModes += ", " + ChatColor.GOLD + Translation.getString("Name.Friendly", locale) + ChatColor.RESET;
+            activeModes += ", " + "§x§f§c§9§8§6§7" + Translation.getString("Name.Friendly", locale) + ChatColor.RESET;
         }
         if (activeBehaviors.contains(Aggressive)) {
             if (!activeModes.equalsIgnoreCase("")) {
                 activeModes += ", ";
             }
-            activeModes += ChatColor.GOLD + Translation.getString("Name.Aggressive", locale) + ChatColor.RESET;
+            activeModes += "§x§f§c§9§8§6§7" + Translation.getString("Name.Aggressive", locale) + ChatColor.RESET;
         }
         if (activeBehaviors.contains(Farm)) {
             if (!activeModes.equalsIgnoreCase("")) {
                 activeModes += ", ";
             }
-            activeModes += ChatColor.GOLD + Translation.getString("Name.Farm", locale) + ChatColor.RESET;
+            activeModes += "§x§f§c§9§8§6§7" + Translation.getString("Name.Farm", locale) + ChatColor.RESET;
         }
         if (activeBehaviors.contains(Raid)) {
             if (!activeModes.equalsIgnoreCase("")) {
                 activeModes += ", ";
             }
-            activeModes += ChatColor.GOLD + Translation.getString("Name.Raid", locale) + ChatColor.RESET;
+            activeModes += "§x§f§c§9§8§6§7" + Translation.getString("Name.Raid", locale) + ChatColor.RESET;
         }
         if (activeBehaviors.contains(Duel)) {
             if (!activeModes.equalsIgnoreCase("")) {
                 activeModes += ", ";
             }
-            activeModes += ChatColor.GOLD + Translation.getString("Name.Duel", locale) + ChatColor.RESET;
+            activeModes += "§x§f§c§9§8§6§7" + Translation.getString("Name.Duel", locale) + ChatColor.RESET;
         }
         return Translation.getString("Name.Modes", locale) + ": " + activeModes;
     }
 
     @Override
     public String[] getUpgradeMessage() {
-        return new String[]{
-                Util.formatText(Translation.getString("Message.Skill.Behavior.Upgrade", myPet.getOwner().getLanguage()), myPet.getPetName()),
+        return new String[] {
+                Util.formatText(Translation.getString("Message.Skill.Behavior.Upgrade", myPet.getOwner().getLanguage()),
+                        myPet.getPetName()),
                 "  " + toPrettyString(myPet.getOwner().getLanguage())
         };
     }
@@ -179,17 +180,21 @@ public class BehaviorImpl implements Behavior {
             while (true) {
                 selectedBehavior = behaviorCycler.next();
                 if (selectedBehavior != Normal) {
-                    if (Permissions.has(myPet.getOwner().getPlayer(), "MyPet.extended.behavior." + selectedBehavior.name().toLowerCase())) {
+                    if (Permissions.has(myPet.getOwner().getPlayer(),
+                            "MyPet.extended.behavior." + selectedBehavior.name().toLowerCase())) {
                         break;
                     }
                 } else {
                     break;
                 }
             }
-            myPet.getOwner().sendMessage(Util.formatText(Translation.getString("Message.Skill.Behavior.NewMode", myPet.getOwner()), myPet.getPetName(), Translation.getString("Name." + selectedBehavior.name(), myPet.getOwner().getPlayer())));
+            myPet.getOwner().sendMessage(Util.formatText(
+                    Translation.getString("Message.Skill.Behavior.NewMode", myPet.getOwner()), myPet.getPetName(),
+                    Translation.getString("Name." + selectedBehavior.name(), myPet.getOwner().getPlayer())));
             return true;
         } else {
-            myPet.getOwner().sendMessage(Util.formatText(Translation.getString("Message.No.Skill", myPet.getOwner()), myPet.getPetName(), this.getName(myPet.getOwner().getLanguage())));
+            myPet.getOwner().sendMessage(Util.formatText(Translation.getString("Message.No.Skill", myPet.getOwner()),
+                    myPet.getPetName(), this.getName(myPet.getOwner().getLanguage())));
             return false;
         }
     }
@@ -197,7 +202,8 @@ public class BehaviorImpl implements Behavior {
     public void schedule() {
         if (selectedBehavior == Aggressive && random.nextBoolean() && myPet.getStatus() == MyPet.PetState.Here) {
             myPet.getEntity().ifPresent(entity -> MyPetApi.getPlatformHelper()
-                    .playParticleEffect(entity.getLocation().add(0, entity.getEyeHeight(), 0), ParticleCompat.VILLAGER_ANGRY.get(), 0.2F, 0.2F, 0.2F, 0.5F, 1, 20));
+                    .playParticleEffect(entity.getLocation().add(0, entity.getEyeHeight(), 0),
+                            ParticleCompat.VILLAGER_ANGRY.get(), 0.2F, 0.2F, 0.2F, 0.5F, 1, 20));
         }
     }
 

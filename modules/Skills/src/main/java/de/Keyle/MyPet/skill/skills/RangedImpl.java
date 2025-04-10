@@ -58,15 +58,19 @@ public class RangedImpl implements Ranged {
     }
 
     public String toPrettyString(String locale) {
-        return Util.formatText(Translation.getString("Message.Skill.Ranged.RoundsPerMinute", locale), String.format("%1.2f", (1. / ((rateOfFire.getValue() * 50.) / 1000.)) * 60.))
-                + " -> " + ChatColor.GOLD + damage.getValue().doubleValue() + ChatColor.RESET
+        return Util.formatText(Translation.getString("Message.Skill.Ranged.RoundsPerMinute", locale),
+                String.format("%1.2f", (1. / ((rateOfFire.getValue() * 50.) / 1000.)) * 60.))
+                + " -> " + "§x§f§c§9§8§6§7" + damage.getValue().doubleValue() + ChatColor.RESET
                 + " " + Translation.getString("Name.Damage", locale);
     }
 
     @Override
     public String[] getUpgradeMessage() {
-        return new String[]{
-                Util.formatText(Translation.getString("Message.Skill.Ranged.Upgrade", myPet.getOwner()), myPet.getPetName(), Translation.getString("Name." + getProjectile().getValue().name(), myPet.getOwner()), damage, String.format("%1.2f", (1. / ((getRateOfFire().getValue() * 50.) / 1000.)) * 60.))
+        return new String[] {
+                Util.formatText(Translation.getString("Message.Skill.Ranged.Upgrade", myPet.getOwner()),
+                        myPet.getPetName(),
+                        Translation.getString("Name." + getProjectile().getValue().name(), myPet.getOwner()), damage,
+                        String.format("%1.2f", (1. / ((getRateOfFire().getValue() * 50.) / 1000.)) * 60.))
         };
     }
 

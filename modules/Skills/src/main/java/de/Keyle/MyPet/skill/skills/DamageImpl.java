@@ -49,13 +49,15 @@ public class DamageImpl implements Damage {
     }
 
     public String toPrettyString(String locale) {
-        return "" + ChatColor.GOLD + damage.getValue().doubleValue() + ChatColor.RESET + " " + Translation.getString("Name.Damage", locale);
+        return "" + "§x§f§c§9§8§6§7" + damage.getValue().doubleValue() + ChatColor.RESET + " "
+                + Translation.getString("Name.Damage", locale);
     }
 
     @Override
     public String[] getUpgradeMessage() {
-        return new String[]{
-                Util.formatText(Translation.getString("Message.Skill.Damage.Upgrade", myPet.getOwner().getLanguage()), myPet.getPetName(), getDamage().getValue().doubleValue())
+        return new String[] {
+                Util.formatText(Translation.getString("Message.Skill.Damage.Upgrade", myPet.getOwner().getLanguage()),
+                        myPet.getPetName(), getDamage().getValue().doubleValue())
         };
     }
 

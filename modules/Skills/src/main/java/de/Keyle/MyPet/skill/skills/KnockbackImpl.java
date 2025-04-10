@@ -56,13 +56,15 @@ public class KnockbackImpl implements Knockback {
     }
 
     public String toPrettyString(String locale) {
-        return "" + ChatColor.GOLD + chance.getValue() + ChatColor.RESET + "%";
+        return "" + "§x§f§c§9§8§6§7" + chance.getValue() + ChatColor.RESET + "%";
     }
 
     @Override
     public String[] getUpgradeMessage() {
-        return new String[]{
-                Util.formatText(Translation.getString("Message.Skill.Knockback.Upgrade", myPet.getOwner().getLanguage()), myPet.getPetName(), getChance().getValue())
+        return new String[] {
+                Util.formatText(
+                        Translation.getString("Message.Skill.Knockback.Upgrade", myPet.getOwner().getLanguage()),
+                        myPet.getPetName(), getChance().getValue())
         };
     }
 
@@ -75,8 +77,7 @@ public class KnockbackImpl implements Knockback {
         target.setVelocity(new Vector(
                 -Math.sin(yaw * Math.PI / 180.0F) * 2 * 0.5F,
                 0.1D,
-                Math.cos(yaw * Math.PI / 180.0F) * 2 * 0.5F
-        ));
+                Math.cos(yaw * Math.PI / 180.0F) * 2 * 0.5F));
     }
 
     public UpgradeComputer<Integer> getChance() {

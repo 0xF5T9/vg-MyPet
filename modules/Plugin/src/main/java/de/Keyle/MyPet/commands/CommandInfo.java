@@ -52,7 +52,8 @@ import java.util.stream.Collectors;
 public class CommandInfo implements CommandTabCompleter {
 
     public enum PetInfoDisplay {
-        Name(false), HP(false), Damage(false), Hunger(true), Exp(true), Level(true), Owner(false), Skilltree(true), RangedDamage(false), RespawnTime(true), Behavior(true);
+        Name(false), HP(false), Damage(false), Hunger(true), Exp(true), Level(true), Owner(false), Skilltree(true),
+        RangedDamage(false), RespawnTime(true), Behavior(true);
 
         public boolean adminOnly;
 
@@ -76,7 +77,8 @@ public class CommandInfo implements CommandTabCompleter {
                 sender.sendMessage(Translation.getString("Message.No.HasPet", player));
                 return true;
             }
-        } else if (args.length > 0 && (!(sender instanceof Player) || Permissions.has((Player) sender, "MyPet.command.info.other"))) {
+        } else if (args.length > 0
+                && (!(sender instanceof Player) || Permissions.has((Player) sender, "MyPet.command.info.other"))) {
             Player p = Bukkit.getServer().getPlayer(args[0]);
             if (p == null || !p.isOnline()) {
                 sender.sendMessage(Translation.getString("Message.No.PlayerOnline", sender));
@@ -101,51 +103,80 @@ public class CommandInfo implements CommandTabCompleter {
             boolean infoShown = false;
             MyPet myPet = petOwner.getMyPet();
 
-            if (canSee(PetInfoDisplay.Name.adminOnly, sender, myPet)) {
-                sender.sendMessage(ChatColor.AQUA + myPet.getPetName() + ChatColor.RESET + ":");
+            if (CommandInfo.canSee(PetInfoDisplay.Name.adminOnly, sender, myPet)) {
+                sender.sendMessage(ChatColor.GRAY + "Tên: §x§7§8§D§C§E§8" + myPet.getPetName());
                 infoShown = true;
             }
-            if (!petOwner.equals(sender) && canSee(!PetInfoDisplay.Owner.adminOnly, sender, myPet)) {
-                sender.sendMessage("   " + Translation.getString("Name.Owner", sender) + ": " + myPet.getOwner().getName());
-                infoShown = true;
-            }
+
             if (canSee(PetInfoDisplay.HP.adminOnly, sender, myPet)) {
                 String msg;
                 if (myPet.getStatus() == PetState.Dead) {
-                    msg = ChatColor.RED + Translation.getString("Name.Dead", sender);
+                    msg = "§x§f§f§6§1§8§8" + Translation.getString("Name.Dead", sender);
                 } else {
-                    if (myPet.getHealth() > myPet.getMaxHealth() / 3 * 2) {
-                        msg = "" + ChatColor.GREEN;
-                    } else if (myPet.getHealth() > myPet.getMaxHealth() / 3) {
-                        msg = "" + ChatColor.YELLOW;
-                    } else {
-                        msg = "" + ChatColor.RED;
-                    }
-                    msg += String.format("%1.2f", myPet.getHealth()) + ChatColor.WHITE + "/" + String.format("%1.2f", myPet.getMaxHealth());
+                    msg = "§x§a§9§d§c§7§6";
+                    msg += String.format("%1.2f", myPet.getHealth()) + "/"
+                            + String.format("%1.2f", myPet.getMaxHealth());
                 }
-                sender.sendMessage("   " + Translation.getString("Name.HP", sender) + ": " + msg);
+                sender.sendMessage(ChatColor.GRAY + "Máu: §x§a§9§d§c§7§6" + msg);
                 infoShown = true;
             }
-            if (canSee(PetInfoDisplay.RespawnTime.adminOnly, sender, myPet)) {
-                if (myPet.getStatus() == PetState.Dead) {
-                    sender.sendMessage("   " + Translation.getString("Name.Respawntime", sender) + ": " + myPet.getRespawnTime());
+
+            if (myPet.getDamage() > 0 && canSee(PetInfoDisplay.Damage.adminOnly, sender, myPet)) {
+                sender.sendMessage(
+                        ChatColor.GRAY + "Sát thương: §x§F§C§9§8§6§7" + String.format("%1.2f", myPet.getDamage()));
+                infoShown = true;
+            }
+
+            if (myPet.getRangedDamage() > 0 && canSee(PetInfoDisplay.RangedDamage.adminOnly, sender, myPet)) {
+                sender.sendMessage(ChatColor.GRAY + "Sát thương tầm xa: §x§F§C§9§8§6§7"
+                        + String.format("%1.2f", myPet.getRangedDamage()));
+                infoShown = true;
+            }
+
+            if (Configuration.HungerSystem.USE_HUNGER_SYSTEM
+                    && canSee(PetInfoDisplay.Hunger.adminOnly, sender, myPet)) {
+                sender.sendMessage(ChatColor.GRAY + "Đói: §x§F§C§9§8§6§7" + Math.round(myPet.getSaturation()));
+
+                infoShown = true;
+            }
+
+            if (canSee(PetInfoDisplay.Level.adminOnly, sender, myPet)) {
+                int lvl = myPet.getExperience().getLevel();
+                sender.sendMessage(ChatColor.GRAY + "Cấp độ: §x§F§F§D§8§6§6" + lvl);
+                infoShown = true;
+            }
+
+            int maxLevel = myPet.getSkilltree() != null ? myPet.getSkilltree().getMaxLevel()
+                    : Configuration.LevelSystem.Experience.LEVEL_CAP;
+            if (canSee(PetInfoDisplay.Exp.adminOnly, sender, myPet) && myPet.getExperience().getLevel() < maxLevel) {
+                double exp = myPet.getExperience().getCurrentExp();
+                double reqEXP = myPet.getExperience().getRequiredExp();
+                sender.sendMessage(ChatColor.GRAY + "Kinh nghiệm: §x§A§B§9§D§F§2" + String.format("%1.2f", exp) + "/"
+                        + String.format("%1.2f", reqEXP));
+                infoShown = true;
+            }
+
+            if (canSee(PetInfoDisplay.Skilltree.adminOnly, sender, myPet) && myPet.getSkilltree() != null) {
+                sender.sendMessage(
+                        ChatColor.GRAY + "Hệ kỹ năng: §x§F§F§D§8§6§6" + myPet.getSkilltree().getDisplayName());
+                infoShown = true;
+            }
+
+            if (canSee(PetInfoDisplay.Behavior.adminOnly, sender, myPet)) {
+                if (myPet.getSkills().has(BehaviorImpl.class)) {
+                    BehaviorImpl behavior = myPet.getSkills().get(BehaviorImpl.class);
+                    sender.sendMessage(ChatColor.GRAY + "Chế độ: §f"
+                            + Translation.getString("Name." + behavior.getBehavior().name(), sender));
                     infoShown = true;
                 }
             }
-            if (myPet.getDamage() > 0 && canSee(PetInfoDisplay.Damage.adminOnly, sender, myPet)) {
-                sender.sendMessage("   " + Translation.getString("Name.Damage", sender) + ": " + String.format("%1.2f", myPet.getDamage()));
-                infoShown = true;
-            }
-            if (myPet.getRangedDamage() > 0 && canSee(PetInfoDisplay.RangedDamage.adminOnly, sender, myPet)) {
-                sender.sendMessage("   " + Translation.getString("Name.RangedDamage", sender) + ": " + String.format("%1.2f", myPet.getRangedDamage()));
-                infoShown = true;
-            }
-            if (Configuration.HungerSystem.USE_HUNGER_SYSTEM && canSee(PetInfoDisplay.Hunger.adminOnly, sender, myPet)) {
-                sender.sendMessage("   " + Translation.getString("Name.Hunger", sender) + ": " + Math.round(myPet.getSaturation()));
 
+            if (Configuration.HungerSystem.USE_HUNGER_SYSTEM
+                    && canSee(PetInfoDisplay.Hunger.adminOnly, sender, myPet)) {
+    
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
-                    FancyMessage m = new FancyMessage("   " + Translation.getString("Name.Food", player) + ": ");
+                    FancyMessage m = new FancyMessage("§7Thức ăn yêu thích: ");
                     boolean comma = false;
                     for (ConfigItem material : MyPetApi.getMyPetInfo().getFood(myPet.getPetType())) {
                         ItemStack is = material.getItem();
@@ -161,13 +192,14 @@ public class CommandInfo implements CommandTabCompleter {
                             try {
                                 m.thenTranslate(MyPetApi.getPlatformHelper().getVanillaName(is));
                             } catch (Exception e) {
-                                MyPetApi.getLogger().warning("A food item caused an error. If you think this is a bug please report it to the MyPet developer.");
+                                MyPetApi.getLogger().warning(
+                                        "A food item caused an error. If you think this is a bug please report it to the MyPet developer.");
                                 MyPetApi.getLogger().warning("" + is);
                                 e.printStackTrace();
                                 continue;
                             }
                         }
-                        m.color(ChatColor.GOLD);
+                      
                         ItemTooltip it = new ItemTooltip();
                         it.setMaterial(is.getType());
                         if (is.hasItemMeta()) {
@@ -183,49 +215,25 @@ public class CommandInfo implements CommandTabCompleter {
                     }
                     MyPetApi.getPlatformHelper().sendMessageRaw(player, m.toJSONString());
                 } else {
-                    String foodString = "   " + Translation.getString("Name.Food", sender) + ": ";
+                    String foodString = ChatColor.GRAY + "Đói: §x§F§C§9§8§6§7";
                     foodString += String.join(
                             ", ",
                             MyPetApi.getMyPetInfo().getFood(myPet.getPetType())
                                     .stream()
-                                    .filter(configItem -> configItem.getItem() != null && configItem.getItem().getType() != Material.AIR)
+                                    .filter(configItem -> configItem.getItem() != null
+                                            && configItem.getItem().getType() != Material.AIR)
                                     .map(configItem -> configItem.getItem().getType().name())
-                                    .collect(Collectors.toList())
-                    );
+                                    .collect(Collectors.toList()));
                     sender.sendMessage(foodString);
                 }
                 infoShown = true;
             }
-            if (canSee(PetInfoDisplay.Behavior.adminOnly, sender, myPet)) {
-                if (myPet.getSkills().has(BehaviorImpl.class)) {
-                    BehaviorImpl behavior = myPet.getSkills().get(BehaviorImpl.class);
-                    sender.sendMessage("   " + Translation.getString("Name.Skill.Behavior", sender) + ": " + Translation.getString("Name." + behavior.getBehavior().name(), sender));
+
+            if (canSee(PetInfoDisplay.RespawnTime.adminOnly, sender, myPet)) {
+                if (myPet.getStatus() == PetState.Dead) {
+                    sender.sendMessage("§x§F§C§9§8§6§7Pet sẽ được hồi sinh sau §x§F§F§6§1§8§8" + myPet.getRespawnTime() + "s");
                     infoShown = true;
                 }
-            }
-            if (canSee(PetInfoDisplay.Skilltree.adminOnly, sender, myPet) && myPet.getSkilltree() != null) {
-                sender.sendMessage("   " + Translation.getString("Name.Skilltree", sender) + ": " + Colorizer.setColors(myPet.getSkilltree().getDisplayName()));
-                infoShown = true;
-            }
-            if (canSee(PetInfoDisplay.Level.adminOnly, sender, myPet)) {
-                int lvl = myPet.getExperience().getLevel();
-                sender.sendMessage("   " + Translation.getString("Name.Level", sender) + ": " + lvl);
-                infoShown = true;
-            }
-            int maxLevel = myPet.getSkilltree() != null ? myPet.getSkilltree().getMaxLevel() : Configuration.LevelSystem.Experience.LEVEL_CAP;
-            if (canSee(PetInfoDisplay.Exp.adminOnly, sender, myPet) && myPet.getExperience().getLevel() < maxLevel) {
-                double exp = myPet.getExperience().getCurrentExp();
-                double reqEXP = myPet.getExperience().getRequiredExp();
-                sender.sendMessage("   " + Translation.getString("Name.Exp", sender) + ": " + String.format("%1.2f", exp) + "/" + String.format("%1.2f", reqEXP));
-                infoShown = true;
-            }
-            if (myPet.getOwner().getDonationRank() != DonateCheck.DonationRank.None) {
-                infoShown = true;
-                String donationMessage = "" + ChatColor.GOLD;
-                donationMessage += myPet.getOwner().getDonationRank().getDefaultIcon();
-                donationMessage += " " + Translation.getString("Name.Title." + myPet.getOwner().getDonationRank().name(), sender) + " ";
-                donationMessage += myPet.getOwner().getDonationRank().getDefaultIcon();
-                sender.sendMessage("   " + donationMessage);
             }
             if (!infoShown) {
                 sender.sendMessage(Translation.getString("Message.CantViewPetInfo", sender));
@@ -258,7 +266,8 @@ public class CommandInfo implements CommandTabCompleter {
     public static boolean canSee(boolean adminOnly, CommandSender sender, StoredMyPet storedMyPet) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            return !adminOnly || storedMyPet.getOwner().getPlayer() == player || Permissions.has(player, "MyPet.admin", false);
+            return !adminOnly || storedMyPet.getOwner().getPlayer() == player
+                    || Permissions.has(player, "MyPet.admin", false);
         } else {
             return true;
         }

@@ -56,7 +56,7 @@ public class RideImpl implements Ride {
 
     public String toPrettyString(String locale) {
         return Translation.getString("Name.Speed", locale)
-                + " +" + ChatColor.GOLD + speed.getValue() + ChatColor.RESET + "%";
+                + " +" + "§x§f§c§9§8§6§7" + speed.getValue() + ChatColor.RESET + "%";
     }
 
     @Override

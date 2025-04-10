@@ -62,15 +62,16 @@ public class ThornsImpl implements Thorns {
     }
 
     public String toPrettyString(String locale) {
-        return "" + ChatColor.GOLD + chance.getValue() + ChatColor.RESET
-                + "% -> " + ChatColor.GOLD + reflectedDamage.getValue() + ChatColor.RESET
+        return "" + "§x§f§c§9§8§6§7" + chance.getValue() + ChatColor.RESET
+                + "% -> " + "§x§f§c§9§8§6§7" + reflectedDamage.getValue() + ChatColor.RESET
                 + "% " + Translation.getString("Name.Damage", locale);
     }
 
     @Override
     public String[] getUpgradeMessage() {
-        return new String[]{
-                Util.formatText(Translation.getString("Message.Skill.Thorns.Upgrade", myPet.getOwner().getLanguage()), myPet.getPetName(), getChance().getValue(), getReflectedDamage().getValue())
+        return new String[] {
+                Util.formatText(Translation.getString("Message.Skill.Thorns.Upgrade", myPet.getOwner().getLanguage()),
+                        myPet.getPetName(), getChance().getValue(), getReflectedDamage().getValue())
         };
     }
 
@@ -99,8 +100,10 @@ public class ThornsImpl implements Thorns {
         myPet.getEntity().ifPresent(entity -> {
             damager.damage(calculateReflectedDamage(event.getDamage()), entity);
             entity.getHandle().makeSound(SoundCompat.THORNS_HIT.get(), 0.2F, 1.0F);
-            MyPetApi.getPlatformHelper().playParticleEffect(entity.getLocation().add(0, 1, 0), ParticleCompat.CRIT_MAGIC.get(), 0.5F, 0.5F, 0.5F, 0.1F, 20, 20);
-            MyPetApi.getPlatformHelper().playParticleEffect(entity.getLocation().add(0, 1, 0), ParticleCompat.CRIT.get(), 0.5F, 0.5F, 0.5F, 0.1F, 10, 20);
+            MyPetApi.getPlatformHelper().playParticleEffect(entity.getLocation().add(0, 1, 0),
+                    ParticleCompat.CRIT_MAGIC.get(), 0.5F, 0.5F, 0.5F, 0.1F, 20, 20);
+            MyPetApi.getPlatformHelper().playParticleEffect(entity.getLocation().add(0, 1, 0),
+                    ParticleCompat.CRIT.get(), 0.5F, 0.5F, 0.5F, 0.1F, 10, 20);
         });
     }
 

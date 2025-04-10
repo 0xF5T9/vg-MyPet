@@ -35,6 +35,8 @@ import org.bukkit.util.Vector;
 
 import java.util.Random;
 
+@SuppressWarnings("all")
+
 public class StompImpl implements Stomp {
 
     private static Random random = new Random();
@@ -66,15 +68,16 @@ public class StompImpl implements Stomp {
     }
 
     public String toPrettyString(String locale) {
-        return "" + ChatColor.GOLD + chance.getValue() + ChatColor.RESET
-                + "% -> " + ChatColor.GOLD + damage.getValue().doubleValue() + ChatColor.RESET
+        return "" + "§x§f§c§9§8§6§7" + chance.getValue() + ChatColor.RESET
+                + "% -> " + "§x§f§c§9§8§6§7" + damage.getValue().doubleValue() + ChatColor.RESET
                 + " " + Translation.getString("Name.Damage", locale);
     }
 
     @Override
     public String[] getUpgradeMessage() {
-        return new String[]{
-                Util.formatText(Translation.getString("Message.Skill.Stomp.Upgrade", myPet.getOwner().getLanguage()), myPet.getPetName(), getChance().getValue(), getChance().getValue().doubleValue())
+        return new String[] {
+                Util.formatText(Translation.getString("Message.Skill.Stomp.Upgrade", myPet.getOwner().getLanguage()),
+                        myPet.getPetName(), getChance().getValue(), getChance().getValue().doubleValue())
         };
     }
 
@@ -100,7 +103,8 @@ public class StompImpl implements Stomp {
                         Player targetPlayer = (Player) livingEntity;
                         if (myPet.getOwner().equals(targetPlayer)) {
                             continue;
-                        } else if (!MyPetApi.getHookHelper().canHurt(myPet.getOwner().getPlayer(), targetPlayer, true)) {
+                        } else if (!MyPetApi.getHookHelper().canHurt(myPet.getOwner().getPlayer(), targetPlayer,
+                                true)) {
                             continue;
                         }
                     } else if (livingEntity instanceof Tameable) {
@@ -117,7 +121,8 @@ public class StompImpl implements Stomp {
                         }
                     } else if (livingEntity instanceof MyPetBukkitEntity) {
                         MyPet targetMyPet = ((MyPetBukkitEntity) livingEntity).getMyPet();
-                        if (!MyPetApi.getHookHelper().canHurt(myPet.getOwner().getPlayer(), targetMyPet.getOwner().getPlayer(), true)) {
+                        if (!MyPetApi.getHookHelper().canHurt(myPet.getOwner().getPlayer(),
+                                targetMyPet.getOwner().getPlayer(), true)) {
                             continue;
                         }
                     }
@@ -127,12 +132,14 @@ public class StompImpl implements Stomp {
 
                     ((LivingEntity) e).damage(this.damage.getValue().doubleValue(), petEntity);
 
-                    double distancePercent = MyPetApi.getPlatformHelper().distance(livingEntity.getLocation(), new Location(livingEntity.getWorld(), posX, posY, posZ)) / 2.5;
+                    double distancePercent = MyPetApi.getPlatformHelper().distance(livingEntity.getLocation(),
+                            new Location(livingEntity.getWorld(), posX, posY, posZ)) / 2.5;
                     if (distancePercent <= 1.0D) {
                         double distanceX = livingEntity.getLocation().getX() - posX;
                         double distanceY = livingEntity.getLocation().getX() + livingEntity.getEyeHeight() - posY;
                         double distanceZ = livingEntity.getLocation().getX() - posZ;
-                        double distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY + distanceZ * distanceZ);
+                        double distance = Math
+                                .sqrt(distanceX * distanceX + distanceY * distanceY + distanceZ * distanceZ);
                         if (distance != 0.0D) {
                             double motFactor = (1.0D - distancePercent);
                             final Vector velocity = livingEntity.getVelocity();

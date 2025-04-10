@@ -59,13 +59,16 @@ public class FireImpl implements Fire {
     }
 
     public String toPrettyString(String locale) {
-        return "" + ChatColor.GOLD + chance.getValue() + ChatColor.RESET + "% -> " + ChatColor.GOLD + duration.getValue().doubleValue() + ChatColor.RESET + " " + Translation.getString("Name.Seconds", locale);
+        return "" + "§x§f§c§9§8§6§7" + chance.getValue() + ChatColor.RESET + "% -> " + "§x§f§c§9§8§6§7"
+                + duration.getValue().doubleValue() + ChatColor.RESET + " "
+                + Translation.getString("Name.Seconds", locale);
     }
 
     @Override
     public String[] getUpgradeMessage() {
-        return new String[]{
-                Util.formatText(Translation.getString("Message.Skill.Fire.Upgrade", myPet.getOwner().getLanguage()), myPet.getPetName(), getChance().getValue(), getDuration().getValue())
+        return new String[] {
+                Util.formatText(Translation.getString("Message.Skill.Fire.Upgrade", myPet.getOwner().getLanguage()),
+                        myPet.getPetName(), getChance().getValue(), getDuration().getValue())
         };
     }
 
@@ -83,7 +86,8 @@ public class FireImpl implements Fire {
 
     public void apply(LivingEntity target) {
         target.setFireTicks(getDuration().getValue() * 20);
-        MyPetApi.getPlatformHelper().playParticleEffect(target.getLocation(), ParticleCompat.SMOKE_LARGE.get(), .5f, .5f, .5f, 0.02f, 20, 20);
+        MyPetApi.getPlatformHelper().playParticleEffect(target.getLocation(), ParticleCompat.SMOKE_LARGE.get(), .5f,
+                .5f, .5f, 0.02f, 20, 20);
     }
 
     @Override

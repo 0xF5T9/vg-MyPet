@@ -46,6 +46,8 @@ import java.util.*;
 import static org.bukkit.ChatColor.*;
 import static org.bukkit.Material.*;
 
+@SuppressWarnings("all")
+
 public class BeaconImpl implements Beacon {
 
     SkullMeta disabledMeta = new SkullMeta();
@@ -71,15 +73,19 @@ public class BeaconImpl implements Beacon {
         if (!Configuration.Skilltree.Skill.Beacon.DISABLE_HEAD_TEXTURE) {
             // stone
             disabledMeta.setOwner("NeverUsed0000001");
-            disabledMeta.setTexture("http://textures.minecraft.net/texture/de9b8aae7f9cc76d625ccb8abc686f30d38f9e6c42533098b9ad577f91c333c");
+            disabledMeta.setTexture(
+                    "http://textures.minecraft.net/texture/de9b8aae7f9cc76d625ccb8abc686f30d38f9e6c42533098b9ad577f91c333c");
             // globe
             everyoneMeta.setOwner("NeverUsed0000002");
-            everyoneMeta.setTexture("http://textures.minecraft.net/texture/b1dd4fe4a429abd665dfdb3e21321d6efa6a6b5e7b956db9c5d59c9efab25");
+            everyoneMeta.setTexture(
+                    "http://textures.minecraft.net/texture/b1dd4fe4a429abd665dfdb3e21321d6efa6a6b5e7b956db9c5d59c9efab25");
             // beachball
             partyMeta.setOwner("NeverUsed0000003");
-            partyMeta.setTexture("http://textures.minecraft.net/texture/5a5ab05ea254c32e3c48f3fdcf9fd9d77d3cba04e6b5ec2e68b3cbdcfac3fd");
+            partyMeta.setTexture(
+                    "http://textures.minecraft.net/texture/5a5ab05ea254c32e3c48f3fdcf9fd9d77d3cba04e6b5ec2e68b3cbdcfac3fd");
             // owner skin
-            ownerMeta = (org.bukkit.inventory.meta.SkullMeta) new ItemStack(EnumSelector.find(Material.class, "SKULL_ITEM", "PLAYER_HEAD")).getItemMeta();
+            ownerMeta = (org.bukkit.inventory.meta.SkullMeta) new ItemStack(
+                    EnumSelector.find(Material.class, "SKULL_ITEM", "PLAYER_HEAD")).getItemMeta();
             ownerMeta.setOwner(myPet.getOwner().getName());
         }
 
@@ -104,7 +110,7 @@ public class BeaconImpl implements Beacon {
                     }
                 }
             };
-            //noinspection unchecked
+            // noinspection unchecked
             upgradeComputer.addCallback(callback);
         }
     }
@@ -175,14 +181,20 @@ public class BeaconImpl implements Beacon {
                         if (active) {
                             menu.getOption(4)
                                     .setMaterial(REDSTONE_BLOCK)
-                                    .setTitle(Util.formatText(Translation.getString("Message.Skill.Beacon.Effect", myPet.getOwner()), RED + Translation.getString("Name.Off", myPet.getOwner())))
-                                    .setLore(RESET + Translation.getString("Message.Skill.Beacon.ClickOn", myPet.getOwner()));
+                                    .setTitle(Util.formatText(
+                                            Translation.getString("Message.Skill.Beacon.Effect", myPet.getOwner()),
+                                            RED + Translation.getString("Name.Off", myPet.getOwner())))
+                                    .setLore(RESET
+                                            + Translation.getString("Message.Skill.Beacon.ClickOn", myPet.getOwner()));
                             active = false;
                         } else {
                             menu.getOption(4)
                                     .setMaterial(EMERALD_BLOCK)
-                                    .setTitle(Util.formatText(Translation.getString("Message.Skill.Beacon.Effect", myPet.getOwner()), GREEN + Translation.getString("Name.On", myPet.getOwner())))
-                                    .setLore(RESET + Translation.getString("Message.Skill.Beacon.ClickOff", myPet.getOwner()));
+                                    .setTitle(Util.formatText(
+                                            Translation.getString("Message.Skill.Beacon.Effect", myPet.getOwner()),
+                                            GREEN + Translation.getString("Name.On", myPet.getOwner())))
+                                    .setLore(RESET
+                                            + Translation.getString("Message.Skill.Beacon.ClickOff", myPet.getOwner()));
                             active = true;
                         }
                         menu.update();
@@ -236,12 +248,16 @@ public class BeaconImpl implements Beacon {
                                     if (selectableBuffs.getValue() > selectedBuffs.size()) {
                                         menu.setOption(13, new IconMenuItem()
                                                 .setMaterial(POTION)
-                                                .setTitle(BLUE + Util.formatText(Translation.getString("Message.Skill.Beacon.RemainingBuffs", myPet.getOwner()), selectableBuffs.getValue() - selectedBuffs.size()))
+                                                .setTitle(BLUE + Util.formatText(
+                                                        Translation.getString("Message.Skill.Beacon.RemainingBuffs",
+                                                                myPet.getOwner()),
+                                                        selectableBuffs.getValue() - selectedBuffs.size()))
                                                 .setAmount(selectableBuffs.getValue() - selectedBuffs.size()));
                                     } else {
                                         menu.setOption(13, new IconMenuItem()
                                                 .setMaterial(GLASS_BOTTLE)
-                                                .setTitle(GRAY + Util.formatText(Translation.getString("Message.Skill.Beacon.RemainingBuffs", myPet.getOwner()), 0)));
+                                                .setTitle(GRAY + Util.formatText(Translation.getString(
+                                                        "Message.Skill.Beacon.RemainingBuffs", myPet.getOwner()), 0)));
                                     }
                                     menu.update();
                                 } else if (selectableBuffs.getValue() > selectedBuffs.size()) {
@@ -250,12 +266,16 @@ public class BeaconImpl implements Beacon {
                                     if (selectableBuffs.getValue() > selectedBuffs.size()) {
                                         menu.setOption(13, new IconMenuItem()
                                                 .setMaterial(POTION)
-                                                .setTitle(BLUE + Util.formatText(Translation.getString("Message.Skill.Beacon.RemainingBuffs", myPet.getOwner()), selectableBuffs.getValue() - selectedBuffs.size()))
+                                                .setTitle(BLUE + Util.formatText(
+                                                        Translation.getString("Message.Skill.Beacon.RemainingBuffs",
+                                                                myPet.getOwner()),
+                                                        selectableBuffs.getValue() - selectedBuffs.size()))
                                                 .setAmount(selectableBuffs.getValue() - selectedBuffs.size()));
                                     } else {
                                         menu.setOption(13, new IconMenuItem()
                                                 .setMaterial(GLASS_BOTTLE)
-                                                .setTitle(GRAY + Util.formatText(Translation.getString("Message.Skill.Beacon.RemainingBuffs", myPet.getOwner()), 0)));
+                                                .setTitle(GRAY + Util.formatText(Translation.getString(
+                                                        "Message.Skill.Beacon.RemainingBuffs", myPet.getOwner()), 0)));
                                     }
                                     menu.update();
                                 } else {
@@ -265,12 +285,16 @@ public class BeaconImpl implements Beacon {
                                 if (selectableBuffs.getValue() > selectedBuffs.size()) {
                                     menu.setOption(13, new IconMenuItem()
                                             .setMaterial(POTION)
-                                            .setTitle(BLUE + Util.formatText(Translation.getString("Message.Skill.Beacon.RemainingBuffs", myPet.getOwner()), selectableBuffs.getValue() - selectedBuffs.size()))
+                                            .setTitle(BLUE + Util.formatText(
+                                                    Translation.getString("Message.Skill.Beacon.RemainingBuffs",
+                                                            myPet.getOwner()),
+                                                    selectableBuffs.getValue() - selectedBuffs.size()))
                                             .setAmount(selectableBuffs.getValue() - selectedBuffs.size()));
                                 } else {
                                     menu.setOption(13, new IconMenuItem()
                                             .setMaterial(GLASS_BOTTLE)
-                                            .setTitle(GRAY + Util.formatText(Translation.getString("Message.Skill.Beacon.RemainingBuffs", myPet.getOwner()), 0)));
+                                            .setTitle(GRAY + Util.formatText(Translation.getString(
+                                                    "Message.Skill.Beacon.RemainingBuffs", myPet.getOwner()), 0)));
                                 }
                             } else if (!selectedBuffs.contains(selectedBuff)) {
                                 if (selectedBuffs.size() != 0 && menu.getOption(selectedBuff.getPosition()) != null) {
@@ -294,15 +318,15 @@ public class BeaconImpl implements Beacon {
         if (beacon.active) {
             menu.setOption(4, new IconMenuItem()
                     .setMaterial(EMERALD_BLOCK)
-                    .setTitle(Util.formatText(Translation.getString("Message.Skill.Beacon.Effect", myPet.getOwner()), GREEN + Translation.getString("Name.On", myPet.getOwner())))
-                    .addLoreLine(RESET + Translation.getString("Message.Skill.Beacon.ClickOff", myPet.getOwner()))
-            );
+                    .setTitle(Util.formatText(Translation.getString("Message.Skill.Beacon.Effect", myPet.getOwner()),
+                            GREEN + Translation.getString("Name.On", myPet.getOwner())))
+                    .addLoreLine(RESET + Translation.getString("Message.Skill.Beacon.ClickOff", myPet.getOwner())));
         } else {
             menu.setOption(4, new IconMenuItem()
                     .setMaterial(REDSTONE_BLOCK)
-                    .setTitle(Util.formatText(Translation.getString("Message.Skill.Beacon.Effect", myPet.getOwner()), RED + Translation.getString("Name.Off", myPet.getOwner())))
-                    .addLoreLine(RESET + Translation.getString("Message.Skill.Beacon.ClickOn", myPet.getOwner()))
-            );
+                    .setTitle(Util.formatText(Translation.getString("Message.Skill.Beacon.Effect", myPet.getOwner()),
+                            RED + Translation.getString("Name.Off", myPet.getOwner())))
+                    .addLoreLine(RESET + Translation.getString("Message.Skill.Beacon.ClickOn", myPet.getOwner())));
         }
 
         menu.setOption(3, new IconMenuItem()
@@ -327,7 +351,8 @@ public class BeaconImpl implements Beacon {
                     .setTitle(GOLD + Translation.getString("Name.Owner", myPet.getOwner()))
                     .setMeta(disabledMeta));
         }
-        if (Configuration.Skilltree.Skill.Beacon.PARTY_SUPPORT && MyPetApi.getHookHelper().isInParty(getMyPet().getOwner().getPlayer())) {
+        if (Configuration.Skilltree.Skill.Beacon.PARTY_SUPPORT
+                && MyPetApi.getHookHelper().isInParty(getMyPet().getOwner().getPlayer())) {
             if (receiver != BuffReceiver.Party) {
                 menu.setOption(22, new IconMenuItem()
                         .setMaterial(EnumSelector.find(Material.class, "SKULL_ITEM", "PLAYER_HEAD"))
@@ -360,83 +385,96 @@ public class BeaconImpl implements Beacon {
             menu.setOption(0, new IconMenuItem()
                     .setMaterial(LEATHER_BOOTS)
                     .setAmount(getBuffLevel(Buff.Speed))
-                    .setTitle(GOLD + Translation.getString("Name." + Buff.Speed.getName(), myPet.getOwner()) + GRAY + " " + Util.decimal2roman(getBuffLevel(Buff.Speed))));
+                    .setTitle(GOLD + Translation.getString("Name." + Buff.Speed.getName(), myPet.getOwner()) + GRAY
+                            + " " + Util.decimal2roman(getBuffLevel(Buff.Speed))));
         }
         if (getBuffLevel(Buff.Haste) > 0) {
             menu.setOption(9, new IconMenuItem()
                     .setMaterial(EnumSelector.find(Material.class, "GOLD_PICKAXE", "GOLDEN_PICKAXE"))
                     .setAmount(getBuffLevel(Buff.Haste))
-                    .setTitle(GOLD + Translation.getString("Name." + Buff.Haste.getName(), myPet.getOwner()) + GRAY + " " + Util.decimal2roman(getBuffLevel(Buff.Haste))));
+                    .setTitle(GOLD + Translation.getString("Name." + Buff.Haste.getName(), myPet.getOwner()) + GRAY
+                            + " " + Util.decimal2roman(getBuffLevel(Buff.Haste))));
         }
         if (getBuffLevel(Buff.Strength) > 0) {
             menu.setOption(18, new IconMenuItem()
                     .setMaterial(DIAMOND_SWORD)
                     .setAmount(getBuffLevel(Buff.Strength))
-                    .setTitle(GOLD + Translation.getString("Name." + Buff.Strength.getName(), myPet.getOwner()) + GRAY + " " + Util.decimal2roman(getBuffLevel(Buff.Strength))));
+                    .setTitle(GOLD + Translation.getString("Name." + Buff.Strength.getName(), myPet.getOwner()) + GRAY
+                            + " " + Util.decimal2roman(getBuffLevel(Buff.Strength))));
         }
         if (getBuffLevel(Buff.JumpBoost) > 0) {
             menu.setOption(1, new IconMenuItem()
                     .setMaterial(EnumSelector.find(Material.class, "FIREWORK", "FIREWORK_ROCKET"))
                     .setAmount(getBuffLevel(Buff.JumpBoost))
-                    .setTitle(GOLD + Translation.getString("Name." + Buff.JumpBoost.getName(), myPet.getOwner()) + GRAY + " " + Util.decimal2roman(getBuffLevel(Buff.JumpBoost))));
+                    .setTitle(GOLD + Translation.getString("Name." + Buff.JumpBoost.getName(), myPet.getOwner()) + GRAY
+                            + " " + Util.decimal2roman(getBuffLevel(Buff.JumpBoost))));
         }
         if (getBuffLevel(Buff.Regeneration) > 0) {
             menu.setOption(10, new IconMenuItem()
                     .setMaterial(APPLE)
                     .setAmount(getBuffLevel(Buff.Regeneration))
-                    .setTitle(GOLD + Translation.getString("Name." + Buff.Regeneration.getName(), myPet.getOwner()) + GRAY + " " + Util.decimal2roman(getBuffLevel(Buff.Regeneration))));
+                    .setTitle(GOLD + Translation.getString("Name." + Buff.Regeneration.getName(), myPet.getOwner())
+                            + GRAY + " " + Util.decimal2roman(getBuffLevel(Buff.Regeneration))));
         }
         if (getBuffLevel(Buff.Resistance) > 0) {
             menu.setOption(19, new IconMenuItem()
                     .setMaterial(DIAMOND_CHESTPLATE)
                     .setAmount(getBuffLevel(Buff.Resistance))
-                    .setTitle(GOLD + Translation.getString("Name." + Buff.Resistance.getName(), myPet.getOwner()) + GRAY + " " + Util.decimal2roman(getBuffLevel(Buff.Resistance))));
+                    .setTitle(GOLD + Translation.getString("Name." + Buff.Resistance.getName(), myPet.getOwner()) + GRAY
+                            + " " + Util.decimal2roman(getBuffLevel(Buff.Resistance))));
         }
         if (getBuffLevel(Buff.FireResistance) > 0) {
             menu.setOption(7, new IconMenuItem()
                     .setMaterial(LAVA_BUCKET)
                     .setAmount(getBuffLevel(Buff.FireResistance))
-                    .setTitle(GOLD + Translation.getString("Name." + Buff.FireResistance.getName(), myPet.getOwner()) + GRAY + " " + Util.decimal2roman(getBuffLevel(Buff.FireResistance))));
+                    .setTitle(GOLD + Translation.getString("Name." + Buff.FireResistance.getName(), myPet.getOwner())
+                            + GRAY + " " + Util.decimal2roman(getBuffLevel(Buff.FireResistance))));
         }
         if (getBuffLevel(Buff.WaterBreathing) > 0) {
             menu.setOption(16, new IconMenuItem()
                     .setMaterial(EnumSelector.find(Material.class, "RAW_FISH", "PUFFERFISH"))
                     .setAmount(getBuffLevel(Buff.WaterBreathing))
-                    .setTitle(GOLD + Translation.getString("Name." + Buff.WaterBreathing.getName(), myPet.getOwner()) + GRAY + " " + Util.decimal2roman(getBuffLevel(Buff.WaterBreathing))));
+                    .setTitle(GOLD + Translation.getString("Name." + Buff.WaterBreathing.getName(), myPet.getOwner())
+                            + GRAY + " " + Util.decimal2roman(getBuffLevel(Buff.WaterBreathing))));
         }
         if (getBuffLevel(Buff.Invisibility) > 0) {
             menu.setOption(25, new IconMenuItem()
                     .setMaterial(EnumSelector.find(Material.class, "EYE_OF_ENDER", "ENDER_EYE"))
                     .setAmount(getBuffLevel(Buff.Invisibility))
-                    .setTitle(GOLD + Translation.getString("Name." + Buff.Invisibility.getName(), myPet.getOwner()) + GRAY + " " + Util.decimal2roman(getBuffLevel(Buff.Invisibility))));
+                    .setTitle(GOLD + Translation.getString("Name." + Buff.Invisibility.getName(), myPet.getOwner())
+                            + GRAY + " " + Util.decimal2roman(getBuffLevel(Buff.Invisibility))));
         }
         if (getBuffLevel(Buff.NightVision) > 0) {
             menu.setOption(8, new IconMenuItem()
                     .setMaterial(TORCH)
                     .setAmount(getBuffLevel(Buff.NightVision))
-                    .setTitle(GOLD + Translation.getString("Name." + Buff.NightVision.getName(), myPet.getOwner()) + GRAY + " " + Util.decimal2roman(getBuffLevel(Buff.NightVision))));
+                    .setTitle(GOLD + Translation.getString("Name." + Buff.NightVision.getName(), myPet.getOwner())
+                            + GRAY + " " + Util.decimal2roman(getBuffLevel(Buff.NightVision))));
         }
         if (MyPetApi.getCompatUtil().compareWithMinecraftVersion("1.9") >= 0) {
             if (getBuffLevel(Buff.Luck) > 0) {
                 menu.setOption(17, new IconMenuItem()
                         .setMaterial(DIAMOND)
                         .setAmount(getBuffLevel(Buff.Luck))
-                        .setTitle(GOLD + Translation.getString("Name." + Buff.Luck.getName(), myPet.getOwner()) + GRAY + " " + Util.decimal2roman(getBuffLevel(Buff.Luck))));
+                        .setTitle(GOLD + Translation.getString("Name." + Buff.Luck.getName(), myPet.getOwner()) + GRAY
+                                + " " + Util.decimal2roman(getBuffLevel(Buff.Luck))));
             }
         }
         /*
-        if (buffLevel.get(21) > 0) {
-            menu.setOption(17, new IconMenuItem()
-                        .setMaterial(GOLDEN_APPLE)
-                        .setAmount(buffLevel.get(21))
-                        .setTitle(GOLD + Translation.getString("Name." + buffNames.get(21), myPet.getOwner()) + GRAY + " " + Util.decimal2roman(buffLevel.get(21))));
-        }
-        */
+         * if (buffLevel.get(21) > 0) {
+         * menu.setOption(17, new IconMenuItem()
+         * .setMaterial(GOLDEN_APPLE)
+         * .setAmount(buffLevel.get(21))
+         * .setTitle(GOLD + Translation.getString("Name." + buffNames.get(21),
+         * myPet.getOwner()) + GRAY + " " + Util.decimal2roman(buffLevel.get(21))));
+         * }
+         */
         if (getBuffLevel(Buff.Absorption) > 0) {
             menu.setOption(26, new IconMenuItem()
                     .setMaterial(SPONGE)
                     .setAmount(getBuffLevel(Buff.Absorption))
-                    .setTitle(GOLD + Translation.getString("Name." + Buff.Absorption.getName(), myPet.getOwner()) + GRAY + " " + Util.decimal2roman(getBuffLevel(Buff.Absorption))));
+                    .setTitle(GOLD + Translation.getString("Name." + Buff.Absorption.getName(), myPet.getOwner()) + GRAY
+                            + " " + Util.decimal2roman(getBuffLevel(Buff.Absorption))));
         }
 
         Iterator<Buff> iterator = selectedBuffs.iterator();
@@ -453,12 +491,15 @@ public class BeaconImpl implements Beacon {
             if (selectableBuffs.getValue() > selectedBuffs.size()) {
                 menu.setOption(13, new IconMenuItem()
                         .setMaterial(POTION)
-                        .setTitle(BLUE + Util.formatText(Translation.getString("Message.Skill.Beacon.RemainingBuffs", myPet.getOwner()), selectableBuffs.getValue() - selectedBuffs.size()))
+                        .setTitle(BLUE + Util.formatText(
+                                Translation.getString("Message.Skill.Beacon.RemainingBuffs", myPet.getOwner()),
+                                selectableBuffs.getValue() - selectedBuffs.size()))
                         .setAmount(selectableBuffs.getValue() - selectedBuffs.size()));
             } else {
                 menu.setOption(13, new IconMenuItem()
                         .setMaterial(GLASS_BOTTLE)
-                        .setTitle(GRAY + Util.formatText(Translation.getString("Message.Skill.Beacon.RemainingBuffs", myPet.getOwner()), 0)));
+                        .setTitle(GRAY + Util.formatText(
+                                Translation.getString("Message.Skill.Beacon.RemainingBuffs", myPet.getOwner()), 0)));
             }
         }
 
@@ -474,7 +515,7 @@ public class BeaconImpl implements Beacon {
                 if (!availableBuffs.equalsIgnoreCase("")) {
                     availableBuffs += ", ";
                 }
-                availableBuffs += GOLD + Translation.getString("Name." + buff.getName(), locale);
+                availableBuffs += "§x§f§c§9§8§6§7" + Translation.getString("Name." + buff.getName(), locale);
                 availableBuffs += GRAY + " " + Util.decimal2roman(getBuffLevel(buff));
                 availableBuffs += ChatColor.RESET;
             }
@@ -484,14 +525,17 @@ public class BeaconImpl implements Beacon {
 
     @Override
     public String[] getUpgradeMessage() {
-        return new String[]{
-                Util.formatText(Translation.getString("Message.Skill.Beacon.Upgrade", myPet.getOwner().getLanguage()), myPet.getPetName(), String.format("%1.2f", getRange().getValue().doubleValue()), getDuration().getValue()),
+        return new String[] {
+                Util.formatText(Translation.getString("Message.Skill.Beacon.Upgrade", myPet.getOwner().getLanguage()),
+                        myPet.getPetName(), String.format("%1.2f", getRange().getValue().doubleValue()),
+                        getDuration().getValue()),
                 " " + toPrettyString(myPet.getOwner().getLanguage())
         };
     }
 
     public void schedule() {
-        if (myPet.getStatus() == MyPet.PetState.Here && isActive() && active && selectedBuffs.size() != 0 && --beaconTimer <= 0) {
+        if (myPet.getStatus() == MyPet.PetState.Here && isActive() && active && selectedBuffs.size() != 0
+                && --beaconTimer <= 0) {
             beaconTimer = 2;
 
             double range = this.range.getValue().doubleValue();
@@ -504,7 +548,6 @@ public class BeaconImpl implements Beacon {
                 return;
             }
 
-
             if (selectedBuffs.size() == 0) {
                 return;
             }
@@ -513,7 +556,8 @@ public class BeaconImpl implements Beacon {
             }
 
             range = range * range;
-            MyPetApi.getPlatformHelper().playParticleEffect(myPet.getLocation().get().add(0, 1, 0), ParticleCompat.SPELL_WITCH.get(), 0.2F, 0.2F, 0.2F, 0.1F, 5, 20);
+            MyPetApi.getPlatformHelper().playParticleEffect(myPet.getLocation().get().add(0, 1, 0),
+                    ParticleCompat.SPELL_WITCH.get(), 0.2F, 0.2F, 0.2F, 0.1F, 5, 20);
 
             List<Player> members = null;
             if (Configuration.Skilltree.Skill.Beacon.PARTY_SUPPORT && receiver == BuffReceiver.Party) {
@@ -524,13 +568,13 @@ public class BeaconImpl implements Beacon {
             List<PotionEffect> potionEffects = new ArrayList<>();
             for (Buff buff : selectedBuffs) {
                 int amplification = getBuffLevel(buff) - 1;
-                PotionEffect effect = new PotionEffect(PotionEffectType.getById(buff.getId()), duration, amplification, true, true);
+                PotionEffect effect = new PotionEffect(PotionEffectType.getById(buff.getId()), duration, amplification,
+                        true, true);
                 potionEffects.add(effect);
             }
 
             Location myPetLocation = this.myPet.getLocation().get();
-            targetLoop:
-            for (Player player : myPetLocation.getWorld().getPlayers()) {
+            targetLoop: for (Player player : myPetLocation.getWorld().getPlayers()) {
                 if (MyPetApi.getPlatformHelper().distanceSquared(player.getLocation(), myPetLocation) > range) {
                     continue;
                 } else if (player.getGameMode().name().equals("SPECTATOR")) {
@@ -548,7 +592,8 @@ public class BeaconImpl implements Beacon {
                                 player.addPotionEffect(effect, true);
                             }
                             if (!player.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
-                                MyPetApi.getPlatformHelper().playParticleEffect(player.getLocation().add(0, 1, 0), ParticleCompat.SPELL_INSTANT.get(), 0.2F, 0.2F, 0.2F, 0.1F, 5, 20);
+                                MyPetApi.getPlatformHelper().playParticleEffect(player.getLocation().add(0, 1, 0),
+                                        ParticleCompat.SPELL_INSTANT.get(), 0.2F, 0.2F, 0.2F, 0.1F, 5, 20);
                             }
                             break targetLoop;
                         }
@@ -557,7 +602,8 @@ public class BeaconImpl implements Beacon {
                             player.addPotionEffect(effect, true);
                         }
                         if (!player.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
-                            MyPetApi.getPlatformHelper().playParticleEffect(player.getLocation().add(0, 1, 0), ParticleCompat.SPELL_INSTANT.get(), 0.2F, 0.2F, 0.2F, 0.1F, 5, 20);
+                            MyPetApi.getPlatformHelper().playParticleEffect(player.getLocation().add(0, 1, 0),
+                                    ParticleCompat.SPELL_INSTANT.get(), 0.2F, 0.2F, 0.2F, 0.1F, 5, 20);
                         }
                         break;
                     case Party:
@@ -567,7 +613,8 @@ public class BeaconImpl implements Beacon {
                                     player.addPotionEffect(effect, true);
                                 }
                                 if (!player.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
-                                    MyPetApi.getPlatformHelper().playParticleEffect(player.getLocation().add(0, 1, 0), ParticleCompat.SPELL_INSTANT.get(), 0.2F, 0.2F, 0.2F, 0.1F, 5, 20);
+                                    MyPetApi.getPlatformHelper().playParticleEffect(player.getLocation().add(0, 1, 0),
+                                            ParticleCompat.SPELL_INSTANT.get(), 0.2F, 0.2F, 0.2F, 0.1F, 5, 20);
                                 }
                             }
                             break;
@@ -578,7 +625,8 @@ public class BeaconImpl implements Beacon {
                 }
             }
 
-            if (Configuration.HungerSystem.USE_HUNGER_SYSTEM && Configuration.Skilltree.Skill.Beacon.HUNGER_DECREASE_TIME > 0 && hungerDecreaseTimer-- < 0) {
+            if (Configuration.HungerSystem.USE_HUNGER_SYSTEM
+                    && Configuration.Skilltree.Skill.Beacon.HUNGER_DECREASE_TIME > 0 && hungerDecreaseTimer-- < 0) {
                 myPet.decreaseSaturation(1);
                 hungerDecreaseTimer = Configuration.Skilltree.Skill.Beacon.HUNGER_DECREASE_TIME;
             }
@@ -617,7 +665,8 @@ public class BeaconImpl implements Beacon {
     @Override
     public TagCompound save() {
         TagCompound nbtTagCompound = new TagCompound();
-        nbtTagCompound.getCompoundData().put("Buffs", new TagIntArray(selectedBuffs.stream().mapToInt(Buff::getId).toArray()));
+        nbtTagCompound.getCompoundData().put("Buffs",
+                new TagIntArray(selectedBuffs.stream().mapToInt(Buff::getId).toArray()));
         nbtTagCompound.getCompoundData().put("Active", new TagByte(this.active));
         nbtTagCompound.getCompoundData().put("Receiver", new TagString(this.receiver.name()));
         return nbtTagCompound;

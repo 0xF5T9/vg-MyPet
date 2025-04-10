@@ -56,15 +56,18 @@ public class HealImpl implements Heal {
     }
 
     public String toPrettyString(String locale) {
-        return "+" + ChatColor.GOLD + heal.getValue().doubleValue() + ChatColor.RESET
+        return "+" + "§x§f§c§9§8§6§7" + heal.getValue().doubleValue() + ChatColor.RESET
                 + Translation.getString("Name.HP", locale)
-                + " -> " + ChatColor.GOLD + timer.getValue() + ChatColor.RESET + " " + Translation.getString("Name.Seconds", locale);
+                + " -> " + "§x§f§c§9§8§6§7" + timer.getValue() + ChatColor.RESET + " "
+                + Translation.getString("Name.Seconds", locale);
     }
 
     @Override
     public String[] getUpgradeMessage() {
-        return new String[]{
-                Util.formatText(Translation.getString("Message.Skill.HpRegeneration.Upgrade", myPet.getOwner().getLanguage()), myPet.getPetName(), getHeal().getValue().doubleValue(), getTimer().getValue())
+        return new String[] {
+                Util.formatText(
+                        Translation.getString("Message.Skill.HpRegeneration.Upgrade", myPet.getOwner().getLanguage()),
+                        myPet.getPetName(), getHeal().getValue().doubleValue(), getTimer().getValue())
         };
     }
 

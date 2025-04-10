@@ -58,13 +58,15 @@ public class BackpackImpl implements de.Keyle.MyPet.api.skill.skills.Backpack {
     }
 
     public String toPrettyString(String locale) {
-        return "" + ChatColor.GOLD + rows.getValue() + ChatColor.RESET + " " + Translation.getString("Name.Rows", locale);
+        return "§x§f§c§9§8§6§7" + rows.getValue() + ChatColor.RESET + " "
+                + Translation.getString("Name.Rows", locale);
     }
 
     @Override
     public String[] getUpgradeMessage() {
-        return new String[]{
-                Util.formatText(Translation.getString("Message.Skill.Inventory.Upgrade", myPet.getOwner()), myPet.getPetName(), getRows().getValue().intValue() * 9)
+        return new String[] {
+                Util.formatText(Translation.getString("Message.Skill.Inventory.Upgrade", myPet.getOwner()),
+                        myPet.getPetName(), getRows().getValue().intValue() * 9)
         };
     }
 
@@ -74,25 +76,36 @@ public class BackpackImpl implements de.Keyle.MyPet.api.skill.skills.Backpack {
                 myPet.getOwner().sendMessage(Translation.getString("Message.No.CanUse", myPet.getOwner()));
                 return false;
             }
-            if (myPet.getOwner().getPlayer().getGameMode() == GameMode.CREATIVE && !Configuration.Skilltree.Skill.Backpack.OPEN_IN_CREATIVE && !Permissions.has(myPet.getOwner().getPlayer(), "MyPet.admin", false)) {
-                myPet.getOwner().sendMessage(Translation.getString("Message.Skill.Inventory.Creative", myPet.getOwner()));
+            if (myPet.getOwner().getPlayer().getGameMode() == GameMode.CREATIVE
+                    && !Configuration.Skilltree.Skill.Backpack.OPEN_IN_CREATIVE
+                    && !Permissions.has(myPet.getOwner().getPlayer(), "MyPet.admin", false)) {
+                myPet.getOwner()
+                        .sendMessage(Translation.getString("Message.Skill.Inventory.Creative", myPet.getOwner()));
                 return false;
             }
-            MyPetInventoryActionEvent event = new MyPetInventoryActionEvent(myPet, MyPetInventoryActionEvent.Action.Open);
+            MyPetInventoryActionEvent event = new MyPetInventoryActionEvent(myPet,
+                    MyPetInventoryActionEvent.Action.Open);
             Bukkit.getServer().getPluginManager().callEvent(event);
             if (event.isCancelled()) {
-                myPet.getOwner().sendMessage(Util.formatText(Translation.getString("Message.No.AllowedHere", myPet.getOwner()), myPet.getPetName()));
+                myPet.getOwner().sendMessage(Util.formatText(
+                        Translation.getString("Message.No.AllowedHere", myPet.getOwner()), myPet.getPetName()));
                 return false;
             }
             if (!myPet.getLocation().get().getBlock().isLiquid()) {
                 openInventory(myPet.getOwner().getPlayer());
                 return true;
             } else {
-                myPet.getOwner().sendMessage(Util.formatText(Translation.getString("Message.Skill.Inventory.Swimming", myPet.getOwner()), myPet.getPetName()));
+                myPet.getOwner()
+                        .sendMessage(Util.formatText(
+                                Translation.getString("Message.Skill.Inventory.Swimming", myPet.getOwner()),
+                                myPet.getPetName()));
                 return false;
             }
         } else {
-            myPet.getOwner().sendMessage(Util.formatText(Translation.getString("Message.Skill.Inventory.NotAvailable", myPet.getOwner()), myPet.getPetName()));
+            myPet.getOwner()
+                    .sendMessage(Util.formatText(
+                            Translation.getString("Message.Skill.Inventory.NotAvailable", myPet.getOwner()),
+                            myPet.getPetName()));
             return false;
         }
     }

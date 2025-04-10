@@ -172,7 +172,7 @@ public class CommandChooseSkilltree implements CommandTabCompleter {
                         IconMenuItem option = new IconMenuItem()
                                 .setMaterial(material.getMaterial())
                                 .setGlowing(icon.isGlowing())
-                                .setTitle(ChatColor.RESET + "❱❱❱  " + ChatColor.DARK_GREEN + Colorizer.setColors(addedSkilltree.getDisplayName()) + ChatColor.RESET + "  ❰❰❰");
+                                .setTitle(ChatColor.WHITE + addedSkilltree.getDisplayName());
                         if (material.isLegacy()) {
                             option.setData(material.getLegacyId().getData());
                         }

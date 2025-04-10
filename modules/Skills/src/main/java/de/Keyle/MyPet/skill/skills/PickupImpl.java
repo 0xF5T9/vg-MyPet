@@ -44,6 +44,8 @@ import org.bukkit.entity.Item;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 
+@SuppressWarnings("all")
+
 public class PickupImpl implements Pickup {
 
     protected UpgradeComputer<Number> range = new UpgradeComputer<>(0);
@@ -70,13 +72,16 @@ public class PickupImpl implements Pickup {
     }
 
     public String toPrettyString(String locale) {
-        return Translation.getString("Name.Range", locale) + ": " + ChatColor.GOLD + String.format("%1.2f", range.getValue().doubleValue()) + ChatColor.RESET + " " + Translation.getString("Name.Blocks", locale);
+        return Translation.getString("Name.Range", locale) + ": " + "§x§f§c§9§8§6§7"
+                + String.format("%1.2f", range.getValue().doubleValue()) + ChatColor.RESET + " "
+                + Translation.getString("Name.Blocks", locale);
     }
 
     @Override
     public String[] getUpgradeMessage() {
-        return new String[]{
-                Util.formatText(Translation.getString("Message.Skill.Pickup.Upgrade", myPet.getOwner().getLanguage()), myPet.getPetName(), String.format("%1.2f", getRange().getValue().doubleValue()))
+        return new String[] {
+                Util.formatText(Translation.getString("Message.Skill.Pickup.Upgrade", myPet.getOwner().getLanguage()),
+                        myPet.getPetName(), String.format("%1.2f", getRange().getValue().doubleValue()))
         };
     }
 
@@ -86,22 +91,31 @@ public class PickupImpl implements Pickup {
                 if (pickup) {
                     pickup = false;
                 } else {
-                    MyPetInventoryActionEvent event = new MyPetInventoryActionEvent(myPet, MyPetInventoryActionEvent.Action.Pickup);
+                    MyPetInventoryActionEvent event = new MyPetInventoryActionEvent(myPet,
+                            MyPetInventoryActionEvent.Action.Pickup);
                     Bukkit.getServer().getPluginManager().callEvent(event);
                     if (!event.isCancelled()) {
                         pickup = true;
                     }
                 }
 
-                String mode = pickup ? Translation.getString("Name.Enabled", myPet.getOwner()) : Translation.getString("Name.Disabled", myPet.getOwner());
-                myPet.getOwner().sendMessage(Util.formatText(Translation.getString(("Message.Skill.Pickup.StartStop"), myPet.getOwner()), myPet.getPetName(), mode));
+                String mode = pickup ? Translation.getString("Name.Enabled", myPet.getOwner())
+                        : Translation.getString("Name.Disabled", myPet.getOwner());
+                myPet.getOwner()
+                        .sendMessage(Util.formatText(
+                                Translation.getString(("Message.Skill.Pickup.StartStop"), myPet.getOwner()),
+                                myPet.getPetName(), mode));
                 return true;
             } else {
-                myPet.getOwner().sendMessage(Util.formatText(Translation.getString("Message.Skill.Pickup.NoInventory", myPet.getOwner()), myPet.getPetName()));
+                myPet.getOwner()
+                        .sendMessage(Util.formatText(
+                                Translation.getString("Message.Skill.Pickup.NoInventory", myPet.getOwner()),
+                                myPet.getPetName()));
                 return false;
             }
         } else {
-            myPet.getOwner().sendMessage(Util.formatText(Translation.getString("Message.No.Skill", myPet.getOwner()), myPet.getPetName(), this.getName(myPet.getOwner().getLanguage())));
+            myPet.getOwner().sendMessage(Util.formatText(Translation.getString("Message.No.Skill", myPet.getOwner()),
+                    myPet.getPetName(), this.getName(myPet.getOwner().getLanguage())));
             return false;
         }
     }
@@ -109,17 +123,24 @@ public class PickupImpl implements Pickup {
     public void schedule() {
         MyPetInventoryActionEvent event = new MyPetInventoryActionEvent(myPet, MyPetInventoryActionEvent.Action.Use);
         Bukkit.getServer().getPluginManager().callEvent(event);
-        if (pickup && (event.isCancelled() || !Permissions.hasExtended(myPet.getOwner().getPlayer(), "MyPet.extended.pickup"))) {
+        if (pickup && (event.isCancelled()
+                || !Permissions.hasExtended(myPet.getOwner().getPlayer(), "MyPet.extended.pickup"))) {
             pickup = false;
-            myPet.getOwner().sendMessage(Util.formatText(Translation.getString(("Message.Skill.Pickup.StartStop"), myPet.getOwner().getPlayer()), myPet.getPetName(), Translation.getString("Name.Disabled", myPet.getOwner())));
+            myPet.getOwner()
+                    .sendMessage(Util.formatText(
+                            Translation.getString(("Message.Skill.Pickup.StartStop"), myPet.getOwner().getPlayer()),
+                            myPet.getPetName(), Translation.getString("Name.Disabled", myPet.getOwner())));
             return;
         }
-        if (pickup && myPet.getOwner().getPlayer().getGameMode() == GameMode.CREATIVE && !Configuration.Skilltree.Skill.Backpack.OPEN_IN_CREATIVE && !Permissions.has(myPet.getOwner().getPlayer(), "MyPet.admin", false)) {
+        if (pickup && myPet.getOwner().getPlayer().getGameMode() == GameMode.CREATIVE
+                && !Configuration.Skilltree.Skill.Backpack.OPEN_IN_CREATIVE
+                && !Permissions.has(myPet.getOwner().getPlayer(), "MyPet.admin", false)) {
             myPet.getOwner().sendMessage(Translation.getString("Message.Skill.Pickup.Creative", myPet.getOwner()));
             pickup = false;
             return;
         }
-        if (isActive() && pickup && myPet.getStatus() == PetState.Here && myPet.getSkills().isActive(BackpackImpl.class)) {
+        if (isActive() && pickup && myPet.getStatus() == PetState.Here
+                && myPet.getSkills().isActive(BackpackImpl.class)) {
             myPet.getEntity().ifPresent(petEntity -> {
                 double range = this.range.getValue().doubleValue();
                 for (Entity entity : petEntity.getNearbyEntities(range, range, range)) {
@@ -136,7 +157,8 @@ public class PickupImpl implements Pickup {
                                     continue;
                                 }
 
-                                PlayerPickupItemEvent playerPickupEvent = new PlayerPickupItemEvent(myPet.getOwner().getPlayer(), itemEntity, 0);
+                                PlayerPickupItemEvent playerPickupEvent = new PlayerPickupItemEvent(
+                                        myPet.getOwner().getPlayer(), itemEntity, 0);
                                 Bukkit.getServer().getPluginManager().callEvent(playerPickupEvent);
 
                                 if (playerPickupEvent.isCancelled()) {

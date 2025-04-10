@@ -59,14 +59,16 @@ public class WitherImpl implements Wither {
     }
 
     public String toPrettyString(String locale) {
-        return "" + ChatColor.GOLD + chance.getValue() + ChatColor.RESET
-                + "% -> " + ChatColor.GOLD + duration.getValue() + ChatColor.RESET + " " + Translation.getString("Name.Seconds", locale);
+        return "" + "§x§f§c§9§8§6§7" + chance.getValue() + ChatColor.RESET
+                + "% -> " + "§x§f§c§9§8§6§7" + duration.getValue() + ChatColor.RESET + " "
+                + Translation.getString("Name.Seconds", locale);
     }
 
     @Override
     public String[] getUpgradeMessage() {
-        return new String[]{
-                Util.formatText(Translation.getString("Message.Skill.Wither.Upgrade", myPet.getOwner().getLanguage()), myPet.getPetName(), getChance().getValue(), getDuration().getValue())
+        return new String[] {
+                Util.formatText(Translation.getString("Message.Skill.Wither.Upgrade", myPet.getOwner().getLanguage()),
+                        myPet.getPetName(), getChance().getValue(), getDuration().getValue())
         };
     }
 

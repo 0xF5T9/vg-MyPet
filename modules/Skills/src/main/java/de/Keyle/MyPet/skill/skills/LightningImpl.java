@@ -61,15 +61,17 @@ public class LightningImpl implements Lightning {
     }
 
     public String toPrettyString(String locale) {
-        return "" + ChatColor.GOLD + chance.getValue() + ChatColor.RESET + "% -> "
-                + ChatColor.GOLD + damage.getValue().doubleValue() + ChatColor.RESET + " "
+        return "" + "§x§f§c§9§8§6§7" + chance.getValue() + ChatColor.RESET + "% -> "
+                + "§x§f§c§9§8§6§7" + damage.getValue().doubleValue() + ChatColor.RESET + " "
                 + Translation.getString("Name.Damage", locale);
     }
 
     @Override
     public String[] getUpgradeMessage() {
-        return new String[]{
-                Util.formatText(Translation.getString("Message.Skill.Lightning.Upgrade", myPet.getOwner().getLanguage()), myPet.getPetName(), getChance().getValue(), getDamage().getValue().doubleValue())
+        return new String[] {
+                Util.formatText(
+                        Translation.getString("Message.Skill.Lightning.Upgrade", myPet.getOwner().getLanguage()),
+                        myPet.getPetName(), getChance().getValue(), getDamage().getValue().doubleValue())
         };
     }
 

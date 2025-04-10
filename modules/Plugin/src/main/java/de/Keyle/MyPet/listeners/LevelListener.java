@@ -97,7 +97,7 @@ public class LevelListener implements Listener {
                         String[] messages = skill.getUpgradeMessage();
                         if (messages != null && messages.length > 0) {
                             for (String message : messages) {
-                                myPet.getOwner().sendMessage("  " + message);
+                                myPet.getOwner().sendMessage(message);
                             }
                         }
                     }
