@@ -40,7 +40,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
-import static org.bukkit.ChatColor.GOLD;
+import static org.bukkit.ChatColor.GRAY;
 import static org.bukkit.ChatColor.RESET;
 
 public class MyPetSelectionGui {
@@ -127,29 +127,35 @@ public class MyPetSelectionGui {
 
                 List<String> lore = new ArrayList<>();
                 if (Configuration.HungerSystem.USE_HUNGER_SYSTEM) {
-                    lore.add(RESET + Translation.getString("Name.Hunger", player) + ": " + GOLD + Math.round(mypet.getSaturation()));
+                    lore.add(GRAY + Translation.getString("Name.Hunger", player) + ": " + "§x§F§C§9§8§6§7" + Math.round(mypet.getSaturation()));
                 }
                 if (mypet.getRespawnTime() > 0) {
-                    lore.add(RESET + Translation.getString("Name.Respawntime", player) + ": " + GOLD + mypet.getRespawnTime() + "sec");
+                    
                 } else {
-                    lore.add(RESET + Translation.getString("Name.HP", player) + ": " + GOLD + String.format("%1.2f", mypet.getHealth()));
+                    lore.add(GRAY + Translation.getString("Name.HP", player) + ": " + "§x§a§9§d§c§7§6" + String.format("%1.2f", mypet.getHealth()));
                 }
                 boolean levelFound = false;
                 if (mypet.getInfo().containsKey("storage")) {
                     TagCompound storage = mypet.getInfo().getAs("storage", TagCompound.class);
                     if (storage.containsKey("level")) {
-                        lore.add(RESET + Translation.getString("Name.Level", player) + ": " + GOLD + storage.getAs("level", TagInt.class).getIntData());
+                        lore.add(GRAY + Translation.getString("Name.Level", player) + ": " + "§x§F§F§D§8§6§6" + storage.getAs("level", TagInt.class).getIntData());
                         levelFound = true;
                     }
                 }
                 if (!levelFound) {
-                    lore.add(RESET + Translation.getString("Name.Exp", player) + ": " + GOLD + String.format("%1.2f", mypet.getExp()));
+                    lore.add(GRAY + Translation.getString("Name.Exp", player) + ": " + "§x§A§B§9§D§F§2" + String.format("%1.2f", mypet.getExp()));
                 }
-                lore.add(RESET + Translation.getString("Name.Type", player) + ": " + GOLD + Translation.getString("Name." + mypet.getPetType().name(), player));
-                lore.add(RESET + Translation.getString("Name.Skilltree", player) + ": " + GOLD + Colorizer.setColors(mypet.getSkilltree() != null ? mypet.getSkilltree().getDisplayName() : "-"));
+                lore.add(GRAY + Translation.getString("Name.Type", player) + ": " + "§f" + Translation.getString("Name." + mypet.getPetType().name(), player));
+                lore.add(GRAY + Translation.getString("Name.Skilltree", player) + ": " + "§x§F§F§D§8§6§6" + Colorizer.setColors(mypet.getSkilltree() != null ? mypet.getSkilltree().getDisplayName() : "-"));
+                if (mypet.getRespawnTime() > 0) {
+                    lore.add(GRAY + "§x§F§C§9§8§6§7Pet sẽ được hồi sinh sau §x§F§F§6§1§8§8" + mypet.getRespawnTime() + "s");
+                }
+
+                lore.add("§r");
+                lore.add("§r§f逨 §x§f§f§d§8§6§6Click để chọn thú cưng");
 
                 IconMenuItem icon = new IconMenuItem();
-                icon.setTitle(RESET + mypet.getPetName());
+                icon.setTitle("§x§7§8§d§c§e§8" + mypet.getPetName());
                 icon.addLore(lore);
                 Optional<EggIconService> egg = MyPetApi.getServiceManager().getService(EggIconService.class);
                 egg.ifPresent(service -> service.updateIcon(mypet.getPetType(), icon));
@@ -168,7 +174,7 @@ public class MyPetSelectionGui {
             if (previousPage != page) {
                 menu.setOption(53, new IconMenuItem()
                         .setMaterial(EnumSelector.find(Material.class, "SIGN", "OAK_SIGN"))
-                        .setTitle(ChatColor.BOLD + "≫≫ " + ChatColor.RESET + nextPage)
+                        .setTitle(ChatColor.BOLD + "≫≫ " + ChatColor.GRAY + nextPage)
                 );
             }
 
